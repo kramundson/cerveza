@@ -1,0 +1,40 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Aim: Convert coordinates of the SolCAP 8303 SNP array to the coordinates of the DM1-3 v6.1 assembly
+
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+```{r}
+solcap <- read_excel("../ref/12864_2011_3434_MOESM2_ESM.xlsx", skip = 2, col_names = c("solcap_id", "flanking_seq"))
+head(solcap)
+```
+
+```{r}
+v4_coords <- read_tsv("../ref/potato_8303SNPs_potato_dm_v4.03.gff3", 
+                      col_names = c("chrom", "source", "type", "start", "end", "score", "strand", "phase", "attributes"))
+head(v4_coords)
+```
+
+```{r}
+add_seq <- v4_coords %>% 
+  mutate(solcap_id = str_extract(attributes, "solcap_snp_c.+") %>% str_remove(";$")) %>% 
+  left_join(solcap) %>% 
+  mutate(snp_index_seq = str_locate(flanking_seq, "\\[")) %>% 
+  mutate(probe_for_blast = str_remove(flanking_seq, "\\[[ATCG]/") %>% str_remove("\\]")) %>% 
+  mutate(blast_query = paste0(">", solcap_id, "_flanking_seq\n", probe_for_blast))
+```
+
+```{r}
+write(add_seq$blast_query, file = "solcap_8303_context_sequences.fa")
+system("makeblastdb -in ../ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa -dbtype nucl")
+system("blastn -query solcap_8303_context_sequences.fa -db ../ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa -outfmt 6 > solcap_8303_context_to_DMv6.tsv")
+hits <- read_tsv("solcap_8303_context_to_DMv6.tsv", col_names = F)
+```
+
+> TODO: Sanity check DM403 coordinates and variant calls; filter alternate low-identity matches.

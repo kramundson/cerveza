@@ -5,7 +5,7 @@ units: "units.tsv"
 genome: "ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa"
 intervals: "ref/DM_1-3_variant_scaffolds.bed"
 good_chroms: ["chr01", "chr02", "chr03", "chr04", "chr05", "chr06", "chr07", "chr08", "chr09", "chr10", "chr11", "chr12"]
-final_samples: ["Zhaoyue_wild_type_flattype", "Zhaoyue_bud_sport_roundtype"] # todo change
+final_samples: []
 windows: "ref/DM_1-3_10kb_windows.bed"
 
 # sequencing adapter

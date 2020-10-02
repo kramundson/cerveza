@@ -1,0 +1,7 @@
+rule samtools_merge:
+    input:
+        lambda x: samples[x.sample] # this accesses all files and wildcards properly
+    output:
+        "data/merged/{sample}.bam"
+    shell:
+        "samtools merge {output} {input}"

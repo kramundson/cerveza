@@ -1,0 +1,6 @@
+rule fastqc:
+    input: "data/reads/{reads}.{ext}.gz"
+    output: 
+        "data/reads/{reads}_fastqc.html",
+        "data/reads/{reads}_fastqc.zip"
+    shell: "fastqc {input}"

@@ -1,0 +1,47 @@
+# path or URL to sequencing unit sheet (TSV format, columns: sample, unit, fq1, fq2)
+# Units are technical replicates (e.g., lanes or resequencing of the same biological
+# sample).
+units: "units.tsv"
+genome: "ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa"
+intervals: "ref/DM_1-3_variant_scaffolds.bed"
+good_chroms: ["chr01", "chr02", "chr03", "chr04", "chr05", "chr06", "chr07", "chr08", "chr09", "chr10", "chr11", "chr12"]
+final_samples: ["Zhaoyue_wild_type_flattype", "Zhaoyue_bud_sport_roundtype"] # todo change
+windows: "ref/DM_1-3_10kb_windows.bed"
+
+# sequencing adapter
+adapter: AGATCGGAAGAGC
+
+params:
+
+    align:
+        threads: 12
+        sort_mem: 4G
+        
+    prefetch:
+        ascp: "--ascp-path '/share/comailab/kramundson/.aspera/connect/bin/ascp|/home/kramundson/.aspera/connect/etc/asperaweb_id_dsa.openssh' --max-size 50000000000"
+        threads: 4
+
+    cutadapt-pe:
+        qual: "-q 10 -m 40"
+        threads: 8
+    
+    cutadapt-se:
+        qual: "-q 10 -m 40"
+        threads: 8
+    
+    mark_duplicates:
+        jarpath: "/share/comailab/kramundson/miniconda3/envs/ximena/share/picard-2.18.27-0/picard.jar"
+        java_heap: "-Xms512m -Xmx4g"
+        opt: "REMOVE_DUPLICATES=true TMP_DIR=./tmp ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000"
+    
+    gatk:
+        jvm: "-Xms512m -Xmx1g -XX:ConcGCThreads=1"
+        jar: "/share/comailab/kramundson/miniconda3/envs/ximena/opt/gatk-3.8/GenomeAnalysisTK.jar"
+        threads: 2
+    
+    depth:
+        mq: 20
+        bin_size: 10000
+
+    # mapping quality filter here?
+    freebayes: "--hwe-priors-off --min-mapping-quality 20 --min-base-quality 20 --genotype-qualities --ploidy 4"

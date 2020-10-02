@@ -1,0 +1,136 @@
+# Run init_genome.snakes before running this Snakefile
+# This Snakefile handles dataset-specific analysis, assuming that reference genome
+# file dependencies and file of output filenames have been made using init_genome.snakes
+
+import os, re
+import pandas as pd
+from Bio import SeqIO
+shell.executable("bash")
+
+configfile: "config.yaml"
+
+units = pd.read_csv(config["units"], index_col=["sample", "unit"], dtype=str, sep = "\t")
+units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])
+
+# need to build dictionary where key is sample and values are all unit files associated with that sample
+# try doing this from pandas?
+
+samples = {}
+for i in units.index.levels[0]:
+    samples[i] = ["data/clipOverlap/{}-{}.bam".format(i, j) for j in units.loc[i].index]
+
+# todo fix, accomodating shell-based off by 1 error
+# scaffolds = [line.rstrip('\n') for line in open("data/intervals/scaffold_intervals.txt", 'r')]
+
+def is_single_end(sample,unit):
+    return pd.isnull(units.loc[(sample, unit), "fq2"])
+
+def get_fastq(wildcards):
+    return "data/reads/"+units.loc[(wildcards.sample, wildcards.unit), ["fq1", "fq2"]].dropna()
+
+def get_trimmed(wildcards):
+    if not is_single_end(**wildcards):
+        return expand("data/trimmed/{sample}-{unit}-{group}.fastq.gz",
+            group=[1,2], **wildcards)
+    return "data/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
+    
+def get_intervals(ref, main_size, backup_size=3000):
+    
+    """
+    Identify natural breaks in genome assembly for scatter-gather variant calling
+    """
+    
+    intervals = []
+
+    with open(ref, 'r') as handle:
+        for record in SeqIO.parse(handle, "fasta"):
+            
+            if record.id not in config["good_chroms"]:
+                continue
+            
+            print("Finding gaps on {}".format(record.id))
+            
+            start = 0
+            tmp_int = []
+            s=record.seq
+            scaff_regex = "N"*int(main_size)+"+"
+            intervals += chunk_by_gap(record, main_size, backup_size)
+        
+    o = open(config["intervals"], 'w')
+    o.write('\n'.join(intervals)+'\n')
+    return intervals
+    
+def chunk_by_gap(record, main_size, backup_size=3000, hardcut_size=1e6):
+
+    """
+    Identify gaps in one SeqIO fasta entry
+    If dividing by gaps of main_size fails, attempt to divide by backup_size gaps
+    """
+    
+    start = 0
+    tmp_int = []
+    scaff_regex = "N{" + str(int(main_size)) + ",}"
+    # print(scaff_regex)
+    
+    for match in re.finditer(scaff_regex, str(record.seq)):
+        tmp_int.append("{}\t{}\t{}".format(record.id, start, match.start()))
+        start = match.end()
+    
+    # Was it divided up? If not, try a smaller gap size
+    if start == 0:
+        backup_regex = "N{" + str(int(backup_size)) + ",}"
+        for match in re.finditer(backup_regex, str(record.seq)):
+            tmp_int.append("{}\t{}\t{}".format(record.id, start, match.start()))
+            start = match.end()
+    
+    # Handle last interval if fasta doesn't end with Ns
+    if start != 0 and start < len(record):
+        tmp_int.append("{}\t{}\t{}".format(record.id, start, len(record)))
+        
+        
+    # Handle last interval if fasta ends with Ns
+    elif start > len(record):
+        fix_start = tmp_int[-1].split('\t')[1]
+        tmp_int[-1] = ("{}\t{}\t{}".format(record.id, fix_start, len(record)))
+        
+    # if still haven't made a cut, do a hard cut
+    elif start == 0:
+        while start < len(record)-hardcut_size:
+            tmp_int.append("{}\t{}\t{}".format(record.id, int(start), int(start)+int(hardcut_size)))
+            start += hardcut_size
+        tmp_int.append("{}\t{}\t{}".format(record.id, int(start), len(record)))
+    
+    return tmp_int
+
+try:
+    ifh = open(config["intervals"], 'r')
+    intervals = []
+    for line in ifh:
+        intervals.append(line.rstrip())
+except FileNotFoundError:
+    intervals = get_intervals(config["genome"], 5e4)
+
+rule all:
+    input:
+        ["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
+        ["data/depths/{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
+        ["data/summarized/summarized_{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
+        "data/calls/all-calls.vcf"
+    
+include: "rules/merge_vcfs.rules"
+include: "rules/freebayes_interval.rules"
+include: "rules/summarize_q20_depth.rules"
+include: "rules/summarize_q0_depth.rules"
+include: "rules/samtools_q20_depth.rules"
+include: "rules/samtools_q0_depth.rules"
+include: "rules/realign_indels.rules" # testing placement at this point in the workflow, rule rewritten
+include: "rules/realigner_target_creator.rules" # testing placement at this point in the workflow, rule rewritten
+include: "rules/samtools_index_pe.rules" # change for later indel realign
+include: "rules/samtools_merge.rules" # change for later indel realign
+include: "rules/clip_overlap.rules" # changed for later indel realign
+include: "rules/filter_good_pairs.rules"
+include: "rules/mark_duplicates.rules"
+include: "rules/align.rules"
+include: "rules/cutadapt_pe.rules"
+include: "rules/cutadapt.rules"
+include: "rules/fastqc.rules"

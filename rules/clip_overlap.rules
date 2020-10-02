@@ -1,0 +1,12 @@
+# Applies soft clip to overlapping mates
+
+rule clip_overlap:
+    input:
+        "data/pairfilt/{sample}-{unit}.bam"
+    output:
+        "data/clipOverlap/{sample}-{unit}.bam"
+    log:
+        "logs/clipOverlap/{sample}-{unit}.log"
+    shell: """
+        bam clipOverlap --in {input} --out {output} --stats --unmapped 2> {log}
+    """

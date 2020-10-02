@@ -1,0 +1,27 @@
+rule realign_indels:
+    input:
+        ref=config["genome"],
+        dict=re.sub("(\.fasta$|\.fa$)", ".dict", config["genome"]),
+        bam="data/merged/{sample}.bam",
+        intervals="data/intervals/{sample}.intervals"
+    output:
+        "data/realigned/{sample}.bam",
+        "data/realigned/{sample}.bam.bai"
+    params:
+        jvm=config['params']['gatk']['jvm'],
+        jar=config['params']['gatk']['jar']
+    log:
+        # "logs/realigned/{sample}-{unit}.log"
+        "logs/realigned/{sample}.log"
+    threads: config['params']['gatk']['threads']
+    shell: """
+        java {params.jvm} -jar {params.jar} \
+            -T IndelRealigner \
+            -R {input.ref} \
+            -I {input.bam} \
+            -targetIntervals {input.intervals} \
+            -o {output[0]} \
+            2> {log}
+        samtools index {output[0]}
+        """
+    

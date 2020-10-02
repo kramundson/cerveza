@@ -1,0 +1,7 @@
+rule samtools_index_pe:
+    input:
+        "data/merged/{sample}.bam"
+    output:
+        "data/merged/{sample}.bam.bai"
+    shell:
+        "samtools index {input}"

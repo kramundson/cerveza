@@ -1,0 +1,14 @@
+# filter reads whose mates map to the same chromosome
+# reads should also have proper pair orientation
+# inspect output to see if f also filters on size distribution
+# I do this in awk b/c flag filter with samtools view keeps letting discordant pairs through
+
+rule filter_good_pairs:
+    input:
+        "data/dedup/{sample}-{unit}.bam"
+    output:
+        "data/pairfilt/{sample}-{unit}.bam"
+    shell: """
+        samtools view -h {input} | awk '{{if ($7 == "=" || $7 == "*" || $1 ~ /@[A-Za-z]{{2}}/) print $0}}' | \
+            samtools view -b -o {output} -
+        """

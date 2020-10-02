@@ -1,0 +1,21 @@
+rule freebayes_interval:
+    input:
+        ref=config["genome"],
+        bam=["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
+        bai=["data/realigned/{}.bam.bai".format(x) for x in units.index.levels[0]]
+    output:
+        "data/calls/interval/{interval}-calls.vcf"
+    params:
+        interval=lambda wildcards: re.sub(r"_(\d+)_", r"-\1:", wildcards.interval[::-1])[::-1],
+        options=config["params"]["freebayes"]
+    log:
+        "log/freebayes/{interval}.log"
+    shell: """
+        freebayes \
+            -r {params.interval} \
+            --fasta-reference {input.ref} \
+            --bam {input.bam} \
+            --vcf {output} \
+            {params.options} \
+            2> {log}
+    """

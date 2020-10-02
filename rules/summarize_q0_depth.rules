@@ -1,0 +1,10 @@
+rule summarize_q0:
+    input:
+        "data/depths/{sample}_q0_depth.bed",
+        config["windows"]
+    output:
+        "data/summarized/summarized_window_{sample}_q0_depth.bed",
+        "data/summarized/summarized_{sample}_q0_depth.bed"
+    shell: """
+        python scripts/window_depth_summarizer.py -b {input[0]} -w {input[1]} -o {output[0]} -g {output[1]}
+    """

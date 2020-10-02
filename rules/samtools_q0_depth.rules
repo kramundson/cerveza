@@ -1,0 +1,8 @@
+rule samtools_q0_depth:
+    input:
+        "data/realigned/{sample}.bam"
+    output:
+        "data/depths/{sample}_q0_depth.bed"
+    shell: """
+        samtools depth -a {input} > {output[0]}
+    """

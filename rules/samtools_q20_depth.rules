@@ -1,0 +1,10 @@
+rule samtools_q20_depth:
+    input:
+        "data/realigned/{sample}.bam"
+    output:
+        "data/depths/{sample}_q20_depth.bed"
+    params:
+        MQ=config["params"]["depth"]["mq"]
+    shell: """
+        samtools depth -a -Q {params.MQ} {input} > {output[0]}
+    """

@@ -1,0 +1,32 @@
+rule realigner_target_creator:
+    input:
+        ref=config["genome"],
+        dict=re.sub("(\.fasta$|\.fa$)", ".dict", config["genome"]),
+        bam="data/merged/{sample}.bam"
+    output:
+        "data/intervals/{sample}.intervals"
+    params:
+        jvm=config["params"]["gatk"]["jvm"],
+        jar=config["params"]["gatk"]["jar"]
+    threads: config["params"]["gatk"]["threads"]
+    log:
+        "logs/gatk3/realigntarget-{sample}.log"
+    shell: """
+         samtools index {input.bam}
+         java {params.jvm} -jar {params.jar} \
+             -T RealignerTargetCreator \
+             -R {input.ref} \
+             -I {input.bam} \
+             -o {output} \
+             2> {log}
+    """
+
+
+
+#        samtools index {input.bam}
+#        gatk3 -T RealignerTargetCreator \
+#        -R {input.ref} \
+#        -I {input.bam} \
+#        -o {output} \
+#        2> {log}
+#    """

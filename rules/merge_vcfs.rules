@@ -4,7 +4,8 @@
 
 rule merge_vcfs:
     input:
-        vcfs=["data/calls/interval/{}-calls.vcf".format(x) for x in intervals],
+        # vcfs=["data/calls/interval/{}-calls.vcf".format(x) for x in intervals],
+        vcfs=["data/calls/interval/{}-calls.vcf".format(re.sub("\t", "_", x)) for x in intervals],
         intervals=config["intervals"]
     output:
         "data/calls/all-calls.vcf"
@@ -16,7 +17,7 @@ rule merge_vcfs:
     shell: """
         sed -e 's/^/data\/calls\/interval\//g' \
             -e 's/$/-calls.vcf/g' {input.intervals} | \
-        tr "\t" "-" > scaffold_calls.list
+        tr "\t" "_" > scaffold_calls.list
         java {params.java_heap} -jar {params.jarpath} MergeVcfs \
             I=scaffold_calls.list \
             O={output} \

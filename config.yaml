@@ -31,12 +31,12 @@ params:
     
     mark_duplicates:
         jarpath: "/share/comailab/kramundson/miniconda3/envs/ximena/share/picard-2.18.27-0/picard.jar"
-        java_heap: "-Xms512m -Xmx4g -XX:ConcGCThreads=1"
+        java_heap: "-Xms512m -Xmx4g -XX:ParallelGCThreads=1"
         opt: "REMOVE_DUPLICATES=true TMP_DIR=./tmp ASSUME_SORT_ORDER=coordinate MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000"
         threads: 2
     
     gatk:
-        jvm: "-Xms512m -Xmx1g -XX:ConcGCThreads=1"
+        jvm: "-Xms512m -Xmx1g -XX:ParallelGCThreads=1"
         jar: "/share/comailab/kramundson/miniconda3/envs/ximena/opt/gatk-3.8/GenomeAnalysisTK.jar"
         threads: 2
     

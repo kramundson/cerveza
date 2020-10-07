@@ -20,13 +20,3 @@ rule realigner_target_creator:
              -o {output} \
              2> {log}
     """
-
-
-
-#        samtools index {input.bam}
-#        gatk3 -T RealignerTargetCreator \
-#        -R {input.ref} \
-#        -I {input.bam} \
-#        -o {output} \
-#        2> {log}
-#    """

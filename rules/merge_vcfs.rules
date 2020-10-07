@@ -1,10 +1,5 @@
-# Note, use MergeVcfs with a list file that has .list extension
-# this keeps the command line argument from being too long in cases where there are
-# many chunks to gather
-
 rule merge_vcfs:
     input:
-        # vcfs=["data/calls/interval/{}-calls.vcf".format(x) for x in intervals],
         vcfs=["data/calls/interval/{}-calls.vcf".format(re.sub("\t", "_", x)) for x in intervals],
         intervals=config["intervals"]
     output:

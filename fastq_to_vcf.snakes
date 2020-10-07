@@ -1,7 +1,3 @@
-# Run init_genome.snakes before running this Snakefile
-# This Snakefile handles dataset-specific analysis, assuming that reference genome
-# file dependencies and file of output filenames have been made using init_genome.snakes
-
 import os, re
 import pandas as pd
 from Bio import SeqIO
@@ -12,15 +8,9 @@ configfile: "config.yaml"
 units = pd.read_csv(config["units"], index_col=["sample", "unit"], dtype=str, sep = "\t")
 units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])
 
-# need to build dictionary where key is sample and values are all unit files associated with that sample
-# try doing this from pandas?
-
 samples = {}
 for i in units.index.levels[0]:
     samples[i] = ["data/clipOverlap/{}-{}.bam".format(i, j) for j in units.loc[i].index]
-
-# todo fix, accomodating shell-based off by 1 error
-# scaffolds = [line.rstrip('\n') for line in open("data/intervals/scaffold_intervals.txt", 'r')]
 
 def is_single_end(sample,unit):
     return pd.isnull(units.loc[(sample, unit), "fq2"])

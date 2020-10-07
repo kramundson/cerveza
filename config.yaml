@@ -23,11 +23,11 @@ params:
 
     cutadapt-pe:
         qual: "-q 10 -m 40"
-        threads: 8
+        threads: 12
     
     cutadapt-se:
         qual: "-q 10 -m 40"
-        threads: 8
+        threads: 12
     
     mark_duplicates:
         jarpath: "/share/comailab/kramundson/miniconda3/envs/ximena/share/picard-2.18.27-0/picard.jar"
@@ -42,6 +42,9 @@ params:
     depth:
         mq: 20
         bin_size: 10000
+ 
+    clipOverlap:
+        "--poolSize 10000000"
 
     # mapping quality filter here?
     freebayes: "--hwe-priors-off --min-mapping-quality 20 --min-base-quality 20 --genotype-qualities --ploidy 4"

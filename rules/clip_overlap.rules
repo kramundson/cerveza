@@ -5,8 +5,9 @@ rule clip_overlap:
         "data/pairfilt/{sample}-{unit}.bam"
     output:
         "data/clipOverlap/{sample}-{unit}.bam"
+    params: config["params"]["clipOverlap"]
     log:
         "logs/clipOverlap/{sample}-{unit}.log"
     shell: """
-        bam clipOverlap --in {input} --out {output} --stats --unmapped 2> {log}
+        bam clipOverlap --in {input} --out {output} {params} --stats --unmapped 2> {log}
     """

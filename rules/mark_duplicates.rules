@@ -23,6 +23,7 @@ rule mark_duplicates:
         jarpath=config["params"]["mark_duplicates"]["jarpath"],
         java_heap=config["params"]["mark_duplicates"]["java_heap"],
         opt=config["params"]["mark_duplicates"]["opt"]
+    threads: 2
     shell:
         "java {params.java_heap} -jar {params.jarpath} MarkDuplicates INPUT={input} "
         "OUTPUT={output.bam} METRICS_FILE={output.metrics} {params.opt} 2> {log}"

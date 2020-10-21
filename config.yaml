@@ -49,3 +49,12 @@ params:
 
     # mapping quality filter here?
     freebayes: "--hwe-priors-off --min-mapping-quality 20 --min-base-quality 20 --genotype-qualities --ploidy 4"
+
+    # raw mpileup for running maps
+    mpup:
+        threads: 12
+    
+    # maps part 1
+    maps_part_1:
+        params:
+        threads: 12

@@ -104,13 +104,10 @@ rule all:
     input:
         ["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
         ["data/depths/{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
-        # ["data/summarized/summarized_{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
         "data/calls/all-calls.vcf"
     
 include: "rules/merge_vcfs.rules"
 include: "rules/freebayes_interval.rules"
-# include: "rules/summarize_q20_depth.rules"
-# include: "rules/summarize_q0_depth.rules"
 include: "rules/samtools_q20_depth.rules"
 include: "rules/samtools_q0_depth.rules"
 include: "rules/realign_indels.rules" # testing placement at this point in the workflow, rule rewritten

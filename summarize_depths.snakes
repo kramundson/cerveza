@@ -1,0 +1,20 @@
+import os, re
+import pandas as pd
+from Bio import SeqIO
+shell.executable("bash")
+
+configfile: "config.yaml"
+
+units = pd.read_csv(config["units"], index_col=["sample", "unit"], dtype=str, sep = "\t")
+units.index = units.index.set_levels([i.astype(str) for i in units.index.levels])
+
+samples = {}
+for i in units.index.levels[0]:
+    samples[i] = ["data/clipOverlap/{}-{}.bam".format(i, j) for j in units.loc[i].index]
+    
+rule all:
+    input:
+        ["data/summarized/summarized_{}_q20_depth.bed".format(x) for x in units.index.levels[0]]
+
+include: "rules/summarize_q20_depth.rules"
+include: "rules/summarize_q0_depth.rules"

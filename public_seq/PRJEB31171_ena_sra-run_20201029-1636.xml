@@ -1,0 +1,1682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RUN_SET>
+<RUN accession="ERR3148745" alias="HB33_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148745</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB33_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool6</TITLE>
+     <EXPERIMENT_REF accession="ERX3177687">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177687</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="28254433561eca0cd456db58dbf57596" checksum_method="MD5" filename="run/ERR314/ERR3148745/HB0033_ATTGAAGG-AGCAAGCC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="ca8bf0bf5e112f87b55d69feaa41be05" checksum_method="MD5" filename="run/ERR314/ERR3148745/HB0033_ATTGAAGG-AGCAAGCC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137611</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148745&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148745&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>2455449</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>736634700</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148747" alias="HB21_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148747</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB21_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177689">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177689</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="fbb9ec11de23ab889a642cde49ca19bc" checksum_method="MD5" filename="run/ERR314/ERR3148747/HB0021_TGGTAATT-CTGAGGTT_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="6435455bd7728a93a7ff0fc71e90532c" checksum_method="MD5" filename="run/ERR314/ERR3148747/HB0021_TGGTAATT-CTGAGGTT_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137613</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148747&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148747&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>917089</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>275126700</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148749" alias="HB25_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148749</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB25_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177691">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177691</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="547e7aaf368a9591ad97c2f9bc05b2a9" checksum_method="MD5" filename="run/ERR314/ERR3148749/HB0025_TGGTTGAC-TTCTGGTT_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="bbac8f336b542623ffd6faabc0e1c182" checksum_method="MD5" filename="run/ERR314/ERR3148749/HB0025_TGGTTGAC-TTCTGGTT_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137615</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148749&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148749&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1083863</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>325158900</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148754" alias="HB20_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148754</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB20_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177696">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177696</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="f459152df1e3bb55d77ee145eba31223" checksum_method="MD5" filename="run/ERR314/ERR3148754/HB0020_TTACTTCT-ATGCAACC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="5f4d8c23b483e1fec2050d81e1aa84b7" checksum_method="MD5" filename="run/ERR314/ERR3148754/HB0020_TTACTTCT-ATGCAACC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137620</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148754&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148754&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>949468</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>284840400</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148755" alias="HB26_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148755</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB26_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177697">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177697</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="2d988e3ccf2f464ae61b690eb437f075" checksum_method="MD5" filename="run/ERR314/ERR3148755/HB0026_GTTGACCG-CATCTCCA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="835c07d0da505f0b16a468344756c4d4" checksum_method="MD5" filename="run/ERR314/ERR3148755/HB0026_GTTGACCG-CATCTCCA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137621</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148755&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148755&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1564566</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>469369800</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148757" alias="HB32_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148757</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB32_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool6</TITLE>
+     <EXPERIMENT_REF accession="ERX3177699">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177699</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="e22ab2d2b92c1a6ab7dc8c045a7a06d0" checksum_method="MD5" filename="run/ERR314/ERR3148757/HB0032_GGTAGTTG-TGCGTCAA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="cdb996e14ba9458d135fe4b700c9fb65" checksum_method="MD5" filename="run/ERR314/ERR3148757/HB0032_GGTAGTTG-TGCGTCAA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137623</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148757&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148757&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>2423082</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>726924600</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148759" alias="EB2A_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148759</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">EB2A_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177701">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177701</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="0a92bf53fedf6a804208d9eb780640d2" checksum_method="MD5" filename="run/ERR314/ERR3148759/RGEB2A_TGGTTGAC-TCTCATCA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="70ca5b4e851b870ade5947f059bac56b" checksum_method="MD5" filename="run/ERR314/ERR3148759/RGEB2A_TGGTTGAC-TCTCATCA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137625</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148759&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148759&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>644382</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>193314600</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148761" alias="LB1_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148761</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">LB1_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177703">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177703</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="fda44318055385845ec78fa29999bfb7" checksum_method="MD5" filename="run/ERR314/ERR3148761/RGLB1_ATGAATCT-CTGACTAT_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="5745e1747977c03525f7cdf60b6c8eb1" checksum_method="MD5" filename="run/ERR314/ERR3148761/RGLB1_ATGAATCT-CTGACTAT_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137627</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148761&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148761&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>326133</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>97839900</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148765" alias="HB22_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148765</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB22_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177707">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177707</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="6ece12601948d9f3eb17c76f81cada9a" checksum_method="MD5" filename="run/ERR314/ERR3148765/HB0022_CCGTCTGC-GTACGTTC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="f1e57aebb4ceea5c0447b9d805c03d32" checksum_method="MD5" filename="run/ERR314/ERR3148765/HB0022_CCGTCTGC-GTACGTTC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137631</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148765&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148765&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>732427</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>219728100</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148744" alias="EB_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148744</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">EB_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool6</TITLE>
+     <EXPERIMENT_REF accession="ERX3177686">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177686</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="e325bec1d2d16c3a173772a93af57b36" checksum_method="MD5" filename="run/ERR314/ERR3148744/EB_AACCTGCC-AATGGTTC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="21f9e0d44ee0369899190ccefa605683" checksum_method="MD5" filename="run/ERR314/ERR3148744/EB_AACCTGCC-AATGGTTC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137610</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148744&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148744&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>880601</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>264180300</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148746" alias="HB31_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148746</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB31_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177688">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177688</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="688831153338a3ce4866e45c904915d0" checksum_method="MD5" filename="run/ERR314/ERR3148746/HB0031_GTATCTGA-CGTAGCGG_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="30f79b5617b0612c2884f7adb6258aa6" checksum_method="MD5" filename="run/ERR314/ERR3148746/HB0031_GTATCTGA-CGTAGCGG_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137612</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148746&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148746&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>767111</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>230133300</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148748" alias="HB23_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148748</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB23_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177690">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177690</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="685aca5525c0a715cd7f6441b1e8594e" checksum_method="MD5" filename="run/ERR314/ERR3148748/HB0023_GTCTTGGC-CGTTGGTT_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="ef93d7d3264725fbdcaab3d2047ce543" checksum_method="MD5" filename="run/ERR314/ERR3148748/HB0023_GTCTTGGC-CGTTGGTT_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137614</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148748&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148748&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>972500</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>291750000</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148750" alias="EB1_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148750</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">EB1_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177692">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177692</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="bd2587bd8daf7ff943909065ace340a0" checksum_method="MD5" filename="run/ERR314/ERR3148750/RGEB1_ATGCCGGA-TGGCGGTT_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="c0501aeb4a73e2bc921eedf382d8894e" checksum_method="MD5" filename="run/ERR314/ERR3148750/RGEB1_ATGCCGGA-TGGCGGTT_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137616</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148750&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148750&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>589912</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>176973600</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148751" alias="LB_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148751</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">LB_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool6</TITLE>
+     <EXPERIMENT_REF accession="ERX3177693">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177693</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="d20c26b3fc11b96673d02cfa144f88e3" checksum_method="MD5" filename="run/ERR314/ERR3148751/LB_AACCGGTT-AATTCAAC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="6dccfd6eb127403506b7ef09aea514de" checksum_method="MD5" filename="run/ERR314/ERR3148751/LB_AACCGGTT-AATTCAAC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137617</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148751&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148751&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>587689</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>176306700</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148752" alias="HB30_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148752</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB30_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177694">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177694</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="7cbc277d4bc82164d8b619d2a170db10" checksum_method="MD5" filename="run/ERR314/ERR3148752/HB0030_GTATTCTC-CCGTTCGG_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="402bd7d90dee13730384f7ada0f1cf68" checksum_method="MD5" filename="run/ERR314/ERR3148752/HB0030_GTATTCTC-CCGTTCGG_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137618</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148752&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148752&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>806073</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>241821900</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148753" alias="EB2B_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148753</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">EB2B_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177695">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177695</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="9bf64cea01ed9326f36961bb966cc03e" checksum_method="MD5" filename="run/ERR314/ERR3148753/RGEB2B_GCTTGATG-TGGATTGG_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="9cf26e9d92362f61467195294beb2d87" checksum_method="MD5" filename="run/ERR314/ERR3148753/RGEB2B_GCTTGATG-TGGATTGG_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137619</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148753&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148753&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>369777</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>110933100</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148756" alias="HB24_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148756</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB24_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177698">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177698</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="1c038e2f53524157e6cb7fd982b40646" checksum_method="MD5" filename="run/ERR314/ERR3148756/HB0024_CAAGCTAA-AACGAGAA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="015114895a3d6d0760e2e46fc8f97f69" checksum_method="MD5" filename="run/ERR314/ERR3148756/HB0024_CAAGCTAA-AACGAGAA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137622</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148756&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148756&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1183734</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>355120200</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148758" alias="HB27_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148758</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB27_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177700">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177700</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="49fcc1c541bc962a48a9867f35c1fee0" checksum_method="MD5" filename="run/ERR314/ERR3148758/HB0027_ATAAGACT-TTATCGAC_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="82545e4a655d7e081a1a72937226b2d7" checksum_method="MD5" filename="run/ERR314/ERR3148758/HB0027_ATAAGACT-TTATCGAC_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137624</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148758&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148758&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1424311</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>427293300</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148760" alias="HB19_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148760</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB19_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177702">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177702</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="d5e8a937e50fb2cc0ceb9b32d290d32d" checksum_method="MD5" filename="run/ERR314/ERR3148760/HB0019_ACGAACTT-GAATCTAA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="39febb627224b5e0eeab6faf0be2450e" checksum_method="MD5" filename="run/ERR314/ERR3148760/HB0019_ACGAACTT-GAATCTAA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137626</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148760&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148760&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1180438</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>354131400</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148762" alias="HB28_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148762</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB28_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177704">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177704</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="9e735bab96070a16e87ce1194cfad40c" checksum_method="MD5" filename="run/ERR314/ERR3148762/HB0028_TATATGCC-ACCTATCA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="a4e012b15a8a462b24bde75d18b1e684" checksum_method="MD5" filename="run/ERR314/ERR3148762/HB0028_TATATGCC-ACCTATCA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137628</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148762&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148762&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>947814</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>284344200</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148763" alias="JK598_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148763</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">JK598_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177705">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177705</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="2cc2193c9004f6da02e631b10b812d07" checksum_method="MD5" filename="run/ERR314/ERR3148763/JK598_1.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="e123e9cc17b2e400a4bb2b719c666d8e" checksum_method="MD5" filename="run/ERR314/ERR3148763/JK598_2.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137629</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148763&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148763&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>806926</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>243691652</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148764" alias="LB0_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148764</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">LB0_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177706">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177706</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="6a6bdfaa303434e7703b9b3d6f74439e" checksum_method="MD5" filename="run/ERR314/ERR3148764/RGLB_CCGTACTA-AACGAGAA_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="bcd24ab0b7e661bbf6fd9c3314987f1a" checksum_method="MD5" filename="run/ERR314/ERR3148764/RGLB_CCGTACTA-AACGAGAA_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137630</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148764&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148764&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>267649</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>80294700</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+<RUN accession="ERR3148766" alias="HB29_NON_UDG" center_name="Max Planck Institute for Developmental Biology, Tuebingen, Germany">
+     <IDENTIFIERS>
+          <PRIMARY_ID>ERR3148766</PRIMARY_ID>
+          <SUBMITTER_ID namespace="MPI-TUEBINGEN">HB29_NON_UDG</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina MiSeq paired end sequencing; AncientPool5</TITLE>
+     <EXPERIMENT_REF accession="ERX3177708">
+          <IDENTIFIERS>
+               <PRIMARY_ID>ERX3177708</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <PLATFORM>
+          <ILLUMINA>
+               <INSTRUMENT_MODEL>Illumina MiSeq</INSTRUMENT_MODEL>
+          </ILLUMINA>
+     </PLATFORM>
+     <DATA_BLOCK>
+          <FILES>
+               <FILE ascii_offset="!" checksum="6d4bf8cd66db35dc3959294e5a4997b0" checksum_method="MD5" filename="run/ERR314/ERR3148766/HB0029_CATCAGTT-CAGCAGAG_L001_R1_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+               <FILE ascii_offset="!" checksum="8094a74ecfb53886d77c2b4efea2cd0c" checksum_method="MD5" filename="run/ERR314/ERR3148766/HB0029_CATCAGTT-CAGCAGAG_L001_R2_001.fastq.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred"/>
+          </FILES>
+     </DATA_BLOCK>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>ERP113689</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>ERS3137632</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>ERA1737028</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148766&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR3148766&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1354570</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>406371000</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-02-11</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+</RUN_SET>

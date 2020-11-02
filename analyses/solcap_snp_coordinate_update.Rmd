@@ -1,40 +1,154 @@
 ---
-title: "R Notebook"
+title: "Convert DMv4 to DMv6 coordinates"
+author: "Kirk Amundson"
+date: 2020_1030
 output: html_notebook
 ---
 
 Aim: Convert coordinates of the SolCAP 8303 SNP array to the coordinates of the DM1-3 v6.1 assembly
 
+## Libraries:
 ```{r}
 library(tidyverse)
 library(readxl)
 ```
 
+## Read in data:
+### Flanking sequence of SolCAP 8303 array SNPs:
 ```{r}
 solcap <- read_excel("../ref/12864_2011_3434_MOESM2_ESM.xlsx", skip = 2, col_names = c("solcap_id", "flanking_seq"))
 head(solcap)
 ```
 
+### DM1-3 v4 asembly SolCAP 8303 coordinates:
 ```{r}
 v4_coords <- read_tsv("../ref/potato_8303SNPs_potato_dm_v4.03.gff3", 
-                      col_names = c("chrom", "source", "type", "start", "end", "score", "strand", "phase", "attributes"))
+                      col_names = c("chrom", "source", "type", "start", "end", "score", "strand", "phase", "attributes")) %>% 
+  mutate(solcap_id = str_extract(attributes, "solcap_snp_c.+") %>% str_remove(";$")) %>% 
+  group_by(solcap_id) %>%
+  mutate(n = n()) %>% 
+  filter(n == 1)
 head(v4_coords)
 ```
 
+> Problem: There are records in the GFF3 file that have the same name. Example: solcap_snp_c2_9926.
+I'm going to throw these away before I do the BLAT search.
+
+## Join flanking sequences to v4 coordinates, then convert to multi-FASTA for BLAST to v6
 ```{r}
 add_seq <- v4_coords %>% 
-  mutate(solcap_id = str_extract(attributes, "solcap_snp_c.+") %>% str_remove(";$")) %>% 
   left_join(solcap) %>% 
   mutate(snp_index_seq = str_locate(flanking_seq, "\\[")) %>% 
   mutate(probe_for_blast = str_remove(flanking_seq, "\\[[ATCG]/") %>% str_remove("\\]")) %>% 
-  mutate(blast_query = paste0(">", solcap_id, "_flanking_seq\n", probe_for_blast))
+  mutate(blast_query = paste0(">", solcap_id, "_", chrom, "_", start, "_", end, "_flanking_seq\n", probe_for_blast))
+```
+
+## As a sanity check, blast these probe sequences to DM1-3 v4 and see if the recovered coordinates match up:
+```{r}
+write(add_seq$blast_query, file = "solcap_8303_context_sequences.fa")
 ```
 
 ```{r}
-write(add_seq$blast_query, file = "solcap_8303_context_sequences.fa")
-system("makeblastdb -in ../ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa -dbtype nucl")
-system("blastn -query solcap_8303_context_sequences.fa -db ../ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa -outfmt 6 > solcap_8303_context_to_DMv6.tsv")
-hits <- read_tsv("solcap_8303_context_to_DMv6.tsv", col_names = F)
+system("/Users/Kirk/miniconda3/bin/pblat ../ref/PGSC_DM_v4.03_pseudomolecules.fasta solcap_8303_context_sequences.fa solcap_8303_context_blat_to_DMv4.tsv -out=blast8")
 ```
 
-> TODO: Sanity check DM403 coordinates and variant calls; filter alternate low-identity matches.
+```{r}
+blast_cols <- c("query_id", "subject_id", "pct_identity", "aln_length",
+                "n_mismatches", "n_gap_opens", "q_start", "q_end",
+                "s_start", "s_end", "e_value", "bit_score")
+
+v4_hits <- read_tsv("solcap_8303_context_blat_to_DMv4.tsv", col_names = blast_cols) %>% 
+  arrange(subject_id, s_start) %>% 
+  mutate(orig_chrom = str_extract(query_id, "[Cc]hr[0-9]{2}")) %>% 
+  mutate(orig_start = str_extract(query_id, "[0-9]{1,}_flanking") %>% str_remove_all("_flanking")) %>% 
+  mutate(s_chrom = str_extract(subject_id, "ch[0-9]{2}") %>% str_replace("ch", "chr")) %>% 
+  mutate(s_left = pmin(s_start, s_end)) %>% 
+  mutate(s_right = pmax(s_start, s_end)) %>% 
+  mutate(pos_consistent = orig_start >= s_left & orig_start <= s_right) %>%
+  mutate(chrom_consistent = orig_chrom == s_chrom)
+```
+
+```{r}
+v4_hits_filtered <- v4_hits %>% 
+  filter(aln_length >= 101) %>% 
+  filter(n_mismatches <= 1) %>%
+  filter(n_gap_opens == 0) %>%
+  group_by(query_id) %>%
+  mutate(n = n())
+table(v4_hits_filtered$n)
+```
+
+> Sanity check filters kept 5,765 SNPs with single best hits in the 4.03 assembly. Apply these to DM1-3 v6. Filters are:
+  1. Alignment length ≥ 90
+  2. Only a single mismatch allowed
+  3. No gaps allowed
+  
+```{r}
+head(v4_hits_filtered)
+v4_hits_filtered %>% 
+  mutate(gff_from_left = s_left + 50,
+         gff_from_right = s_right - 50,
+         match_orig_left = gff_from_left == orig_start,
+         match_orig_right = gff_from_right == orig_start) %>%
+  group_by(match_orig_left, match_orig_right) 
+```
+  
+## Lift over coordinates to DM1-3 v6
+```{r}
+system("/Users/Kirk/miniconda3/bin/pblat ../ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa solcap_8303_context_sequences.fa solcap_8303_context_blat_to_DMv6.tsv -out=blast8")
+```
+
+```{r}
+v6_hits <- read_tsv("solcap_8303_context_blat_to_DMv6.tsv", col_names = blast_cols) %>% 
+  arrange(subject_id, s_start) %>% 
+  mutate(orig_chrom = str_extract(query_id, "[Cc]hr[0-9]{2}")) %>% 
+  mutate(orig_start = str_extract(query_id, "[0-9]{1,}_flanking") %>% str_remove_all("_flanking")) %>% 
+  mutate(s_chrom = str_extract(subject_id, "ch[0-9]{2}") %>% str_replace("ch", "chr")) %>% 
+  mutate(s_left = pmin(s_start, s_end)) %>% 
+  mutate(s_right = pmax(s_start, s_end)) %>% 
+  mutate(pos_consistent = orig_start >= s_left & orig_start <= s_right) %>%
+  mutate(chrom_consistent = orig_chrom == subject_id)
+```
+
+```{r}
+v6_hits_filtered <- v6_hits %>% 
+  filter(aln_length == 101) %>% 
+  filter(n_mismatches <= 1) %>%
+  filter(n_gap_opens == 0) %>%
+  group_by(query_id) %>%
+  mutate(n = n()) %>% 
+  ungroup() %>% 
+  filter(n == 1)
+```
+
+```{r}
+v6_hits_as_gff <- v6_hits_filtered %>% 
+  mutate(chrom = subject_id,
+         source = "st_infinium_8303_v4_liftover_to_v6",
+         type = "SNP",
+         start = s_left + 50,
+         end = s_right - 50,
+         score = ".",
+         strand = "+",
+         phase = ".",
+         attributes = str_extract(query_id, "solcap_snp_c[0-9]_[0-9]{1,}")) %>% 
+  select(chrom,
+         source,
+         type,
+         start,
+         end,
+         score,
+         strand,
+         phase,
+         attributes)
+```
+
+```{r}
+nrow(v6_hits_as_gff)
+```
+
+> 5,775 SNPs kept after liftover.
+
+```{r}
+write_tsv(v6_hits_as_gff, "potato_array_SNPs_v6_liftover.gff3", col_names = F)
+```

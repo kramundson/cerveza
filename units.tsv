@@ -78,3 +78,18 @@ MF_105_B1	CSFP200003979_L2	MF105_B1_CSFP200003979-1a_H552FDSXY_L2_1.fq.gz	MF105_
 USDA_Desiree_KPT1	KFRAG_01491	KFRAG_01491-1.fastq.gz	KFRAG_01491-2.fastq.gz	
 USDA_Desiree_KPT7	KFRAG_01497	KFRAG_01497-1.fastq.gz	KFRAG_01497-2.fastq.gz	
 USDA_Desiree_KPT13	KFRAG_01503	KFRAG_01503-1.fastq.gz	KFRAG_01503-2.fastq.gz	
+4x_Superior	SRR2069940	SRR2069940_1.fastq.gz	SRR2069940_2.fastq.gz	mother
+4x_Superior	SRR2069941	SRR2069941_1.fastq.gz	SRR2069941_2.fastq.gz	mother
+4x_Superior	SRR2069942	SRR2069942_1.fastq.gz	SRR2069942_2.fastq.gz	mother
+4x_Atlantic	SRR2070063	SRR2070063_1.fastq.gz	SRR2070063_2.fastq.gz	mother
+4x_Atlantic	SRR2070065	SRR2070065_1.fastq.gz	SRR2070065_2.fastq.gz	mother
+4x_Superior	SRR2070067	SRR2070067_1.fastq.gz	SRR2070067_2.fastq.gz	mother
+4x_LOP868	SRR6123032	SRR6123032_1.fastq.gz	SRR6123032_2.fastq.gz	mother
+4x_Kalkaska	SRR5349579	SRR5349579_1.fastq.gz	SRR5349579_2.fastq.gz	mother
+4x_Katahdin	SRR5349594	SRR5349594_1.fastq.gz	SRR5349594_2.fastq.gz	mother
+4x_Kennnebec	SRR5349593	SRR5349593_1.fastq.gz	SRR5349593_2.fastq.gz	mother
+4x_Norkotah	SRR5349581	SRR5349581_1.fastq.gz	SRR5349581_2.fastq.gz	mother
+4x_Russet_Burbank	SRR5349587	SRR5349587_1.fastq.gz	SRR5349587_2.fastq.gz	mother
+4x_Snowden	SRR5349577	SRR5349577_1.fastq.gz	SRR5349577_2.fastq.gz	mother
+4x_Superior	SRR5349638	SRR5349638_1.fastq.gz	SRR5349638_2.fastq.gz	mother
+2x_DM1_3	SRR2069932	SRR2069932_1.fastq.gz	SRR2069932_2.fastq.gz	mother

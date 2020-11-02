@@ -7,6 +7,19 @@ output: html_notebook
 
 Aim: Convert coordinates of the SolCAP 8303 SNP array to the coordinates of the DM1-3 v6.1 assembly
 
+Summary:
+
+1. Get context sequences (SNP + 50bp context in either direction) from (Hamilton et al. 2011) and GFF3 of SolCAP SNPs from Buell lab website.
+2. Remove SNPs with duplicate ID names from GFF3, then join by SolCAP SNP name the to context sequences from (Hamilton et al. 2011).
+3. Write out a multi FASTA of SNP context sequence and SNP ID. Include chrom and GFF3 coordinates for downstream sanity check.
+4. BLAT context sequences to DM1-3 v4.03 assembly, then determine filters necessary for retaining single best hits.
+  * Full length (101bp) alignment
+  * One mismatch allowed
+  * No gaps
+  * Discard sequences with multiple hits that passed these thresholds.
+5. BLAT context sequences to DM1-3 v4.03 assembly and apply match filters developed for v4.03.
+6. TODO: Check VCF of sequenced lines with SolCAP data to see that coordinates are correct.
+
 ## Libraries:
 ```{r}
 library(tidyverse)

@@ -1,0 +1,165 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(viridis)
+library(readxl)
+library(gstudio)
+library(phangorn)
+library(ape)
+```
+
+```{r}
+comp <- function(mystr) {
+  out <- chartr("acgtACGT", "tgcaTGCA", mystr)
+  return(out)
+}
+```
+```{r}
+rc <- function(mystr) {
+  print(mystr)
+  tmp <- chartr("acgtACGT", "tgcaTGCA", mystr)
+  splits <- strsplit(tmp, "")[[1]]
+  print(splits)
+  reversed <- rev(splits)
+  print(reversed)
+  out <- paste(reversed, collapse = "")
+  return(out)
+}
+rc("TGGG")
+```
+
+1. Read in SolCAP SNPs. I need to place these on the DM v4.04 reference genome
+```{r}
+solcap <- read_tsv("../ref/potato_8303SNPs_potato_dm_v4.03.gff3",
+                   col_names = c("CHROM", "source", "feature", "POS", "end", "score", "strand", "frame", "attribute"))
+head(solcap)
+```
+
+2. Read in genotype calls from Hirsch et al (2013) G3.
+Table S3 from the manuscript.
+This is genotype scores for 3,763 markers of 250 lines using a diploid model.
+```{r}
+solcap_genos <- read_excel("TableS3.xlsx", col_names = T, skip = 1)
+head(solcap_genos)
+```
+
+3. Split out SNP name from attributes of SolCAP markers
+```{r}
+solcap <- solcap %>% 
+  mutate(attribute2 = str_remove_all(attribute, "[A-Za-z]{1,}=")) %>% 
+  separate(attribute2, into = c("ID", "SNP"), sep = ";")
+```
+
+```{r}
+solcap_samples <- colnames(solcap_genos)[-1]
+```
+
+4. Left join with genotypees
+```{r}
+anchored_genos <- solcap_genos %>% 
+  left_join(., solcap) %>% 
+  dplyr::select(CHROM, POS, end, everything()) %>% 
+  arrange(CHROM, POS)
+```
+
+5. Read in VCF with Desiree genotype calls.
+I provisionally filtered the raw calls by intersecting with the 8303 array SNPs.
+```{r}
+# standard tidyverse VCF parser ops
+sep <- function(...) {
+  dots <- list(...)
+  separate_(..., into = paste(dots[[2]], attributes[[1]], sep = "_"), convert = T, sep = ":")
+}
+```
+```{r}
+file <- "2020_07_18_array_intersect_calls.vcf.gz"
+```
+```{r}
+# tidyverse vcf parser
+vcf_header <- system(paste("zgrep '#C'", file), intern = T) %>% 
+  str_replace("^#C", "C") %>% 
+  str_remove_all("[0-9]x_") %>% 
+  str_split(pattern = "\t")
+```
+```{r}
+vcf <- read_tsv(file, col_names = vcf_header[[1]], comment = "#", na = c(".", "./.", "././.", "./././.", "NA"))
+```
+
+```{r}
+info  <- str_split(vcf$INFO[1], ";")[[1]] %>% 
+  str_replace("=.+", "")
+info
+```
+```{r}
+attributes <- str_split(names(table(vcf$FORMAT)), ":", simplify = F)
+print(attributes)[[1]]
+```
+
+```{r}
+## edit this to be from a diploid model instead
+vcf2 <- vcf %>% 
+  mutate(INFO = str_replace_all(INFO, "[A-Za-z]*=", "")) %>%
+  separate(INFO, into = info, sep = ";", convert = T) %>% 
+  Reduce(f = sep, x = colnames(.)[-c(1:49,ncol(.))]) %>% 
+  mutate(Desiree_GT = case_when(Desiree_GT == "0/0/0/0" ~ "0/0",
+                                Desiree_GT == "1/1/1/1" ~ "1/1",
+                                Desiree_GT %in% c("0/0/0/1", "0/0/1/1", "0/1/1/1") ~ "0/1")) %>% 
+  dplyr::select(-ID)
+```
+
+```{r}
+vcf_as_diploid <- vcf2 %>% 
+  mutate_at(vars(ends_with("GT")), function(x) case_when(x %in% c("0/0/0/0", "0/0", "0/0/0") ~ "0/0",
+                                                         x %in% c("1/1", "1/1/1", "1/1/1/1") ~ "1/1",
+                                                         x %in% c("0/1", "0/0/1", "0/1/1", "0/0/0/1", "0/0/1/1", "0/1/1/1") ~ "0/1"))
+```
+
+```{r}
+add_sequenced <- inner_join(vcf_as_diploid, anchored_genos) %>% 
+  filter(NUMALT == 1) %>% 
+  filter(CIGAR == "1X") %>% 
+  mutate(DM_chip = str_remove(`DM1-3 516 R44`, "[GATC]$")) %>% 
+  mutate(DM_chip_revcomp = ifelse(DM_chip == REF, F, T)) %>% 
+  mutate_at(solcap_samples, function (x) ifelse(.$DM_chip != .$REF, comp(x), x)) %>% 
+  mutate_at(solcap_samples, function(x) str_count(x, .$ALT)) %>% 
+  mutate_at(vars(ends_with("GT")), function(x) str_count(x, "1")) %>%
+  dplyr::select(CHROM, POS, REF, ALT, ends_with("GT"), all_of(solcap_samples)) %>% 
+  dplyr::select(-FORMAT_GT, -IVP48_GT, -BB115_GT)
+```
+
+```{r}
+add_sequenced %>% 
+  dplyr::select(CHROM, POS, REF, ALT, contains("MF"), "Desiree_GT", contains("Desiree"), everything()) %>% 
+  View
+```
+
+```{r}
+geno_mtx <- add_sequenced %>% 
+  gather(Sample, Genotype, -CHROM, -POS, -REF, -ALT) %>% 
+  dplyr::select(-REF, -ALT) %>% 
+  unite(LOC, CHROM, POS, remove = T) %>% 
+  pivot_wider(names_from = LOC, values_from = Genotype)
+```
+
+```{r}
+dist_mtx <- geno_mtx %>% 
+  dplyr::select(-Sample) %>%
+  dist(method = "euclidean") %>% 
+  as.matrix()
+rownames(dist_mtx) <- geno_mtx$Sample
+colnames(dist_mtx) <- geno_mtx$Sample
+```
+
+```{r}
+UPGMA <- upgma(dist_mtx)
+nj <- NJ(dist_mtx)
+```
+
+```{r}
+write.tree(UPGMA, file = "SolCAP_Desiree_UPGMA_diploid_model_2020_1102.tre")
+write.tree(nj, file = "SolCAP_Desiree_NJ_diploid_model_2020_1102.tre")
+```

@@ -1,0 +1,47 @@
+---
+title: "BIR Coverage Plots"
+author: "Kirk Amundson"
+date: 2020_10_22
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(viridis)
+```
+
+```{r}
+des <- read_tsv("../data/summarized/summarized_window_USDA_Desiree_q20_depth.bed",
+                col_names = c("chrom", "start", "end", "mean_dp", "median_dp"))
+```
+
+```{r}
+des %>% 
+  filter(chrom %in% sprintf("chr%0.2d", 1:12)) %>% 
+  mutate(median_dp_cap = ifelse(median_dp <= quantile(.$median_dp, 0.99), as.numeric(median_dp), NA)) %>% 
+  ggplot(., aes(x = start, y = median_dp_cap)) +
+  geom_point(size = 0.1, alpha = 0.1) +
+  facet_wrap(~chrom, ncol = 2, strip.position = "r")
+```
+
+```{r}
+des %>% 
+  filter(chrom %in% sprintf("chr%0.2d", 8)) %>% 
+  mutate(median_dp_cap = ifelse(median_dp <= quantile(.$median_dp, 0.99), as.numeric(median_dp), NA)) %>% 
+  ggplot(., aes(x = start, y = median_dp_cap)) +
+  geom_vline(xintercept = 5.45e7, linetype = "dashed") +
+  geom_point(size = 0.8, alpha = 0.2) +
+  facet_wrap(~chrom, ncol = 2, strip.position = "r")
+```
+
+```{r}
+des %>% 
+  filter(chrom %in% sprintf("chr%0.2d", 7)) %>% 
+  filter(start >= 5.1e7) %>% 
+  mutate(median_dp_cap = ifelse(median_dp <= quantile(.$median_dp, 0.99), as.numeric(median_dp), NA)) %>% 
+  ggplot(., aes(x = start, y = median_dp_cap)) +
+  geom_vline(xintercept = 5.2e7, linetype = "dashed") +
+  geom_point(size = 0.4, alpha = 0.4) +
+  facet_wrap(~chrom, ncol = 2, strip.position = "r")
+```
+

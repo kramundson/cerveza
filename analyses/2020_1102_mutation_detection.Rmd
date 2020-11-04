@@ -1,0 +1,231 @@
+---
+title: "BIR project mutation_detection"
+author: "Kirk Amundson"
+date: 2020_1102
+output: html_notebook
+---
+
+Aim: Determine whether protoplast-regenerated lines of Desiree have novel mutations
+along the south arm of chromosome 8, and whether the mutations in those lines are shared.
+
+## Libraries:
+```{r}
+library(tidyverse)
+library(viridis)
+library(ggbeeswarm)
+library(UpSetR)
+```
+
+## Functions:
+```{r}
+sep <- function(...) {
+  dots <- list(...)
+  separate_(..., into = paste(dots[[2]], attributes[[1]], sep = "_"), convert = T, sep = ":")
+}
+```
+
+```{r}
+vcf_site_filters <- function(vcf) {
+  
+  vcf_filtered <- vcf %>% 
+    filter(NUMALT == 1) %>% # added this filter step on 4 May 2020. Output was entirely NUMALT==1 anyway, but better to enforce it
+    filter(CIGAR == "1X") %>%
+    filter(QUAL >= 20) %>%
+    mutate(MQM = as.numeric(MQM)) %>% # for example, MQM is read in as a character by default
+    filter(MQM >= 50) %>%
+    filter(MQMR >= 50) %>% # MQMR usually gets imputed correctly, either as double or numeric
+    mutate(MQ.diff = abs(MQM - MQMR)) %>%
+    filter(MQ.diff < 10) %>%
+    mutate(RPPR = as.numeric(RPPR)) %>% # obscure, would like to remove
+    filter(RPPR <= 20) %>% # obscure, would like to remove
+    mutate(RPP = as.numeric(RPP)) %>%
+    filter(RPP <= 20) %>%
+    mutate(EPP = as.numeric(EPP)) %>%
+    filter(EPP <= 20) %>%
+    mutate(EPPR = as.numeric(EPPR)) %>%
+    filter(EPPR <= 20) %>%
+    mutate(SAP = as.numeric(SAP)) %>%
+    filter(SAP <= 20) %>%
+    mutate(SRP = as.numeric(SRP)) %>%
+    filter(SRP <= 20)
+  
+  return(vcf_filtered)
+}
+```
+
+## Read in data
+
+1. Raw variant calls, chromosome 8 only.
+```{r}
+file <- "../data/calls/chr08-calls-USDA-Desiree-hom.vcf.gz"
+vcf_header <- system(paste0("gunzip -c ", file, " | head -n 1000 | grep '^#C'"), intern = T) %>% 
+  str_replace("^#C", "C") %>%
+  str_replace_all("[0-9]x_", "") %>%
+  str_split(pattern = "\t")
+```
+
+```{r}
+vcf <- read_tsv(file, col_names = vcf_header[[1]], comment = "#", na = c(".", "./.", "././.", "./././."))
+```
+
+```{r}
+info <- str_split(vcf$INFO[1], ";")[[1]] %>%
+  str_replace("=.+", "")
+print(info)
+
+attributes <- str_split(names(table(vcf$FORMAT)), ":", simplify = F)
+print(attributes)[[1]]
+```
+
+```{r}
+vcf_open <- vcf %>% 
+  filter(FORMAT != "GT:GQ:DP:AD:RO:QR:AO:QA:GL") %>% 
+  mutate(INFO = str_replace_all(INFO, "[A-Za-z]*=", "")) %>%
+  separate(INFO, into = info, sep = ";", convert = T)
+```
+
+```{r}
+head(vcf_open)
+```
+
+```{r}
+vcf_filt <- vcf_site_filters(vcf_open)
+```
+
+```{r}
+sample_vars <- colnames(vcf_filt)[-c(1:49)]
+sample_vars
+```
+
+```{r}
+vcf_sample_open <- vcf_filt %>% 
+  Reduce(f = sep, x = sample_vars)
+```
+
+## Are mutations along track of chromosome 8 shared among all lines with the reverted translocation?
+```{r}
+vcf_sample_open %>% 
+  filter(NUMALT == 1,
+         MF_43_3_DP > 20,
+         USDA_Desiree_DP > 20) %>% 
+  mutate(MF_43_3_novel_allele_DP = ifelse(USDA_Desiree_GT == "0/0/0/0", as.numeric(MF_43_3_AO), MF_43_3_RO)) %>% 
+  ggplot(., aes(x = POS, y = MF_43_3_novel_allele_DP / MF_43_3_DP)) +
+  geom_point(alpha = 0.2) +
+  scale_y_continuous(limits = c(0,1))
+```
+
+```{r}
+vcf_sample_open %>% 
+  filter(NUMALT == 1,
+         MF_93_2_DP > 20,
+         USDA_Desiree_DP > 20) %>% 
+  mutate(MF_93_2_novel_allele_DP = ifelse(USDA_Desiree_GT == "0/0/0/0", as.numeric(MF_93_2_AO), MF_93_2_RO)) %>% 
+  ggplot(., aes(x = POS, y = MF_93_2_novel_allele_DP / MF_93_2_DP)) +
+  geom_point(alpha = 0.2) +
+  geom_vline(xintercept = 5.45e7, color = "red", linetype = "dashed") +
+  scale_y_continuous(limits = c(0,1))
+```
+
+```{r}
+vcf_sample_open %>% 
+  filter(USDA_Desiree_AO == 0 | USDA_Desiree_RO == 0) %>% 
+  select(CHROM, POS, ends_with("GT"), -contains("KPT")) %>% 
+  # select(CHROM, POS, starts_with("USDA"), starts_with("MF"), -contains("MF_113")) %>% 
+  select(CHROM, POS, starts_with("USDA_Desiree"), starts_with("MF_93"), starts_with("MF_86"), starts_with("MF_43"), starts_with("MF_63")) %>% 
+  filter(POS >= 5.45e7) %>% 
+  group_by(USDA_Desiree_GT) %>% 
+  tally
+```
+
+```{r}
+4825 + 1890
+```
+
+> 6,715 sites assayed. How many have a mutation?
+
+```{r}
+add_mutation_anotaton <- vcf_sample_open %>%
+  filter(USDA_Desiree_AO == 0 | USDA_Desiree_RO == 0) %>% 
+  select(CHROM, POS, ends_with("GT"), -contains("KPT")) %>% 
+  select(CHROM, POS, starts_with("USDA"), starts_with("MF"), -contains("MF_113")) %>%
+  # select(CHROM, POS, starts_with("USDA_Desiree"), starts_with("MF_93"), starts_with("MF_86"), starts_with("MF_43"), starts_with("MF_63")) %>% 
+  mutate_at(vars(starts_with("MF")), function(x) case_when(
+     x %in% c("0/0/0/1", "0/0/1/1", "0/1/1/1") ~ "D/M",
+     .$USDA_Desiree_GT == "0/0/0/0" & x == "0/0/0/0" ~ "D/D",
+     .$USDA_Desiree_GT == "1/1/1/1" & x == "1/1/1/1" ~ "D/D"
+  )) %>% 
+  mutate(USDA_Desiree_GT = "D/D") %>%
+  filter(POS >= 5.45e7) %>% 
+  unite(POS, CHROM:POS, remove = T) %>% 
+  pivot_longer(ends_with("GT"), names_to = "sample", values_to = "geno") %>% 
+  group_by(POS) %>% 
+  mutate(mutation_loc = any(str_detect(geno, "M"))) %>% 
+  pivot_wider(names_from = sample, values_from = geno, id_cols = c(POS, mutation_loc))
+
+table(add_mutation_anotaton$mutation_loc)
+```
+
+```{r}
+5631 + 746
+6715 - 6377
+```
+
+> Mutation detected at 746 sites. 338 sites had missing data.
+
+```{r}
+# mut_tbl <- vcf_sample_open %>% 
+#   select(CHROM, POS, ends_with("GT"), -contains("KPT")) %>% 
+#   select(CHROM, POS, starts_with("USDA_Desiree"), starts_with("MF_93"), starts_with("MF_86"), starts_with("MF_43"), starts_with("MF_63")) %>% 
+#   mutate_at(vars(starts_with("MF")), function(x) case_when(
+#      x %in% c("0/0/0/1", "0/0/1/1", "0/1/1/1") ~ "D/M",
+#      .$USDA_Desiree_GT == "0/0/0/0" & x == "0/0/0/0" ~ "D/D",
+#      .$USDA_Desiree_GT == "1/1/1/1" & x == "1/1/1/1" ~ "D/D"
+#   )) %>% 
+#   mutate(USDA_Desiree_GT = "D/D") %>% 
+#   mutate_at(vars(ends_with("GT")), function(x) str_count(x, "M")) %>%
+#   filter(POS >= 5.45e7)
+```
+
+```{r}
+mut_df <- add_mutation_anotaton %>% 
+  mutate(POS = factor(POS)) %>% 
+  filter(mutation_loc) %>% 
+  select(-mutation_loc) %>% 
+  mutate_at(vars(ends_with("GT")), function(x) str_count(x, "M")) %>%
+  as.data.frame() 
+```
+
+```{r}
+upset(mut_df,
+      nsets = 15,
+      sets.x.label = "Mutations Per Clone",
+      mainbar.y.label = "Mutation Intersections",
+      number.angles = 30,
+      point.size = 3.5,
+      line.size = 2)
+```
+
+```{r}
+png(file="mutation_upset_plt_v2.png", width = 1000, height = 400, units = "px")
+upset(mut_df,
+      nsets = 10,
+        sets.x.label = "Mutations Per Clone",
+        mainbar.y.label = "Mutation Intersections",
+        number.angles = 30,
+        point.size = 3.5,
+        line.size = 2)
+dev.off()
+```
+
+## Mutational Signature Analysis:
+Six classes of base substitution. All are referred to by the pyrimidine of the mutated W-C base pair.
+  1. C>A
+  2. C>G
+  3. C>T
+  4. T>A
+  5. T>C
+  6. T>G
+
+With bases immediately 5' and 3' of the mutated base pair, there are 96 possible mutations to classify.
+This classification is used in cancer genomics literature for distinguishing mutational signatures that
+cause the same substitutions in different sequence contexts.

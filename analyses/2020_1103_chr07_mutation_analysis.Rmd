@@ -1,0 +1,124 @@
+---
+title: "BIR project chr07 mutation detection"
+author: "Kirk Amundson"
+date: 2020_1103
+output: html_notebook
+---
+
+Aim: Inspect distal tip of USDA Desiree chromosome 7 for mutation clusters
+indicative of break-induced replication. Use all other Desiree clones as
+a control.
+
+## Libraries:
+```{r}
+library(tidyverse)
+library(UpSetR)
+```
+
+## Functions:
+```{r}
+sep <- function(...) {
+  dots <- list(...)
+  separate_(..., into = paste(dots[[2]], attributes[[1]], sep = "_"), convert = T, sep = ":")
+}
+```
+
+```{r}
+vcf_site_filters <- function(vcf) {
+  
+  vcf_filtered <- vcf %>% 
+    filter(NUMALT == 1) %>% # added this filter step on 4 May 2020. Output was entirely NUMALT==1 anyway, but better to enforce it
+    filter(CIGAR == "1X") %>%
+    filter(QUAL >= 20) %>%
+    mutate(MQM = as.numeric(MQM)) %>% # for example, MQM is read in as a character by default
+    filter(MQM >= 50) %>%
+    filter(MQMR >= 50) %>% # MQMR usually gets imputed correctly, either as double or numeric
+    mutate(MQ.diff = abs(MQM - MQMR)) %>%
+    filter(MQ.diff < 10) %>%
+    mutate(RPPR = as.numeric(RPPR)) %>% # obscure, would like to remove
+    filter(RPPR <= 20) %>% # obscure, would like to remove
+    mutate(RPP = as.numeric(RPP)) %>%
+    filter(RPP <= 20) %>%
+    mutate(EPP = as.numeric(EPP)) %>%
+    filter(EPP <= 20) %>%
+    mutate(EPPR = as.numeric(EPPR)) %>%
+    filter(EPPR <= 20) %>%
+    mutate(SAP = as.numeric(SAP)) %>%
+    filter(SAP <= 20) %>%
+    mutate(SRP = as.numeric(SRP)) %>%
+    filter(SRP <= 20)
+  
+  return(vcf_filtered)
+}
+```
+
+## Data:
+1. Variant calls, site filters pre-applied:
+```{r}
+file <- "../data/calls/chr07-filtered-calls.vcf.gz"
+```
+
+```{r}
+vcf <- read_tsv(file, col_names = T)
+```
+
+```{r}
+vcf_sample_open <- vcf %>% 
+  Reduce(f = sep, x = sample_vars)
+```
+
+## Compare UCD Desiree to other Desirees, chromosome 7:
+```{r}
+vcf_sample_filt <- vcf_sample_open %>% 
+  select(CHROM, POS, contains("Desiree"), -contains("KPT")) %>% 
+  filter(CIP_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+  filter(CIP_Desiree_GT == IPK_Desiree_GT,
+         CIP_Desiree_GT == CNRS_Desiree_GT) %>% 
+  filter(USDA_Desiree_GT != CIP_Desiree_GT) %>% 
+  filter(USDA_Desiree_DP >= 20,
+         IPK_Desiree_DP >= 20,
+         CNRS_Desiree_DP >= 20,
+         CIP_Desiree_DP >= 20)
+```
+
+```{r}
+vcf_sample_filt %>% 
+  mutate(USDA_Desiree_novel_allele_DP = ifelse(CIP_Desiree_GT == "0/0/0/0", as.numeric(USDA_Desiree_AO), USDA_Desiree_RO)) %>% 
+  ggplot(., aes(x = POS, y = USDA_Desiree_novel_allele_DP / USDA_Desiree_DP)) +
+  geom_point(alpha = 0.01) +
+  geom_vline(xintercept = 5.2e7, color = "red", linetype = "dashed") +
+  facet_wrap(~CHROM, strip.position = "r") +
+  scale_y_continuous(limits = c(0,1))
+```
+
+```{r}
+vcf_sample_filt %>% 
+  select(CHROM, POS, ends_with("GT")) %>% 
+  nrow()
+```
+
+> 141,044 SNPs between USDA_Desiree and all other Desirees ON CHROMOSOME 7 ALONE. WHAT THE FUCK.
+
+## Leave USDA Desiree out, then compare CIP Desiree to all others:
+```{r}
+vcf_sample_filt_2 <- vcf_sample_open %>% 
+  select(CHROM, POS, contains("Desiree"), -contains("KPT")) %>% 
+  filter(CNRS_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+  filter(CNRS_Desiree_GT == Cornell_Desiree_GT) %>% 
+  filter(CIP_Desiree_GT != Cornell_Desiree_GT) %>% 
+  filter(USDA_Desiree_DP >= 20,
+         IPK_Desiree_DP >= 20,
+         CNRS_Desiree_DP >= 20,
+         CIP_Desiree_DP >= 20)
+```
+
+```{r}
+vcf_sample_filt_2 %>% 
+  mutate(CIP_Desiree_novel_allele_DP = ifelse(CNRS_Desiree_GT == "0/0/0/0", as.numeric(CIP_Desiree_AO), CIP_Desiree_RO)) %>% 
+  ggplot(., aes(x = POS, y = CIP_Desiree_novel_allele_DP / CIP_Desiree_DP)) +
+  geom_point(alpha = 0.01) +
+  geom_vline(xintercept = 5.2e7, color = "red", linetype = "dashed") +
+  facet_wrap(~CHROM, strip.position = "r") +
+  scale_y_continuous(limits = c(0,1))
+```
+

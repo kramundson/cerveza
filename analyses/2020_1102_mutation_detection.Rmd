@@ -1,5 +1,5 @@
 ---
-title: "BIR project mutation_detection"
+title: "BIR project chr08 mutation detection"
 author: "Kirk Amundson"
 date: 2020_1102
 output: html_notebook
@@ -54,8 +54,7 @@ vcf_site_filters <- function(vcf) {
 ```
 
 ## Read in data
-
-1. Raw variant calls, chromosome 8 only.
+1. Variant calls, chromosome 8, USDA_Desiree homozygous 0/0/0/0 or 1/1/1/1 genotypes only.
 ```{r}
 file <- "../data/calls/chr08-calls-USDA-Desiree-hom.vcf.gz"
 vcf_header <- system(paste0("gunzip -c ", file, " | head -n 1000 | grep '^#C'"), intern = T) %>% 
@@ -197,7 +196,7 @@ mut_df <- add_mutation_anotaton %>%
 
 ```{r}
 upset(mut_df,
-      nsets = 15,
+      nsets = 12,
       sets.x.label = "Mutations Per Clone",
       mainbar.y.label = "Mutation Intersections",
       number.angles = 30,
@@ -215,6 +214,13 @@ upset(mut_df,
         point.size = 3.5,
         line.size = 2)
 dev.off()
+```
+
+> Mutations in the regenerated lines with reversion of the translocation look the same.
+
+## Do the unique mutations in MF74, MF93 AND MF98 form clusters?
+```{r}
+
 ```
 
 ## Mutational Signature Analysis:

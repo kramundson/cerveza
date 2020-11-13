@@ -1,0 +1,49 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Libraries:
+```{r}
+library(tidyverse)
+```
+
+## Functions:
+
+## Data:
+```{r}
+mh_pnas <- read_csv("SraRunTable_PRJNA378971.csv", col_names = T)
+head(mh_pnas)
+```
+
+```{r}
+mh_pnas_units <- mh_pnas %>% 
+  mutate(unit = Run) %>% 
+  mutate(sample = paste(Sample_ID, Organism, sep = " ") %>% str_replace_all(., " ", "_") %>% str_remove("_Solanum_tuberosum")) %>% 
+  mutate(sample = ifelse(Organism == "Solanum tuberosum" & subgroup != "Tuberosum", paste(sample, subgroup, sep = "_"), sample)) %>% 
+  mutate(fq1 = paste0(Run, "_1.fastq.gz"),
+         fq2 = paste0(Run, "_2.fastq.gz"),
+         md5 = NA) %>% 
+  filter(`Assay Type` == "WGS") %>% 
+  dplyr::select(sample, unit, fq1, fq2, md5)
+```
+
+```{r}
+current_units <- read_tsv("../old_units/units.tsv", col_names = T)
+head(current_units)
+```
+
+```{r}
+dup_samples <- c("Atlantic", "Kalkaska", "Katahdin", "Kennebec", "Norkotah", "Russet Burbank", "Snowden", "Superior")
+```
+
+```{r}
+units_with_mh <- bind_rows(current_units, mh_pnas_units) %>% 
+  distinct() %>% 
+  filter(!sample %in% dup_samples) %>% 
+  dplyr::select(-md5)
+```
+
+```{r}
+write_tsv("../units.tsv", col_names = T)
+```

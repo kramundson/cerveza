@@ -1,0 +1,311 @@
+---
+title: "BIR project mutation detection"
+author: "Kirk Amundson"
+date: 2020_1111
+output: html_notebook
+---
+
+Aim: Inspect USDA Desiree for mutation clusters indicative of break-induced
+replication. Use all other Desiree clones as a control.
+
+This doesn't run as an RStudio notebook, so I ran the code locally on one chromosome,
+then uploaded to bruno to be run on all chromosomes. Plots generated on bruno were then
+downloaded to local.
+
+## Libraries:
+```{r}
+library(tidyverse)
+library(viridis)
+library(ggpubr)
+library(UpSetR)
+```
+
+## Functions:
+```{r}
+sep <- function(...) {
+  dots <- list(...)
+  separate_(..., into = paste(dots[[2]], attributes[[1]], sep = "_"), convert = T, sep = ":")
+}
+```
+
+```{r}
+vcf_site_filters <- function(vcf) {
+  
+  vcf_filtered <- vcf %>% 
+    filter(NUMALT == 1) %>% # added this filter step on 4 May 2020. Output was entirely NUMALT==1 anyway, but better to enforce it
+    filter(CIGAR == "1X") %>%
+    filter(QUAL >= 20) %>%
+    mutate(MQM = as.numeric(MQM)) %>% # for example, MQM is read in as a character by default
+    filter(MQM >= 50) %>%
+    filter(MQMR >= 50) %>% # MQMR usually gets imputed correctly, either as double or numeric
+    mutate(MQ.diff = abs(MQM - MQMR)) %>%
+    filter(MQ.diff < 10) %>%
+    mutate(RPPR = as.numeric(RPPR)) %>% # obscure, would like to remove
+    filter(RPPR <= 20) %>% # obscure, would like to remove
+    mutate(RPP = as.numeric(RPP)) %>%
+    filter(RPP <= 20) %>%
+    mutate(EPP = as.numeric(EPP)) %>%
+    filter(EPP <= 20) %>%
+    mutate(EPPR = as.numeric(EPPR)) %>%
+    filter(EPPR <= 20) %>%
+    mutate(SAP = as.numeric(SAP)) %>%
+    filter(SAP <= 20) %>%
+    mutate(SRP = as.numeric(SRP)) %>%
+    filter(SRP <= 20)
+  
+  return(vcf_filtered)
+}
+```
+
+```{r}
+# generic function: identify loci where test_geno has a different genotype than all other genotypes
+# replace capability of maps with less command line jockeying
+parse_mutations <- function(dataset, test_geno, ref_geno, min_depth = 20) {
+
+  out <- dataset %>% 
+    select(-contains("KPT"), -contains("MF"), -contains("IPK")) %>% 
+    filter_at(vars(ends_with("GT"), -{{test_geno}}), all_vars(. == {{ref_geno}})) %>%
+    mutate(test_geno_match = ifelse({{ref_geno}} == {{test_geno}}, "not_mutation", "mutation")) %>% 
+    filter_at(vars(ends_with("_DP")), all_vars(. >= min_depth))
+
+  return(out)
+}
+```
+
+## Data:
+1. Variant calls, site filters pre-applied:
+```{r}
+# file <- "../data/calls/chr07-filtered-calls.vcf.gz"
+files <- dir(pattern = "filtered", path = "../data/calls", full.names = T)
+files
+```
+
+```{r}
+# vcf <- read_tsv(file, col_names = T)
+vcf <- map_dfr(files, function(x) read_tsv(x, col_names = T))
+```
+
+```{r}
+sample_vars <- colnames(vcf)[-c(1:49, ncol(vcf))]
+sample_vars
+
+attributes <- str_split(names(table(vcf$FORMAT)), ":", simplify = F)
+print(attributes)[[1]]
+```
+
+```{r}
+vcf_sample_open <- vcf %>% 
+  Reduce(f = sep, x = sample_vars)
+```
+
+```{r}
+# ggplot(vcf_sample_open, aes(x = DP)) +
+#   annotate(geom = "rect", xmin = 180, xmax = 1250, ymin = 0, ymax = 2.5e4, fill = "green", alpha = 0.2) +
+#   geom_histogram(binwidth = 10) +
+#   coord_cartesian(xlim = c(0, 2000)) 
+```
+
+```{r}
+# ggplot(vcf_sample_open, aes(x = (RO + AO) / DP)) +
+#   geom_histogram(binwidth = 0.01)
+```
+
+## Depth filters for comparing Desiree clones to each other:
+```{r}
+# vcf_sample_filt <- vcf_sample_open %>% 
+#   select(CHROM, POS, contains("Desiree"), -contains("KPT")) %>% 
+#   filter(USDA_Desiree_DP >= 20,
+#          CNRS_Desiree_DP >= 20,
+#          CIP_Desiree_DP >= 20,
+#          Cornell_Desiree_DP >= 20)
+```
+
+## Compare UCD Desiree to other Desirees, chromosome 7:
+```{r}
+# vcf_sample_filt %>% 
+#   filter(CIP_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+#   filter(CIP_Desiree_GT == CNRS_Desiree_GT,
+#          CIP_Desiree_GT == Cornell_Desiree_GT) %>% 
+#   filter(USDA_Desiree_GT != CIP_Desiree_GT) %>%
+#   mutate(USDA_Desiree_novel_allele_DP = ifelse(CIP_Desiree_GT == "0/0/0/0", as.numeric(USDA_Desiree_AO), USDA_Desiree_RO)) %>% 
+#   ggplot(., aes(x = POS, y = USDA_Desiree_novel_allele_DP / USDA_Desiree_DP)) +
+#   geom_point(alpha = 0.01) +
+#   geom_vline(xintercept = 5.2e7, color = "red", linetype = "dashed") +
+#   facet_wrap(~CHROM, strip.position = "r") +
+#   scale_y_continuous(limits = c(0,1))
+```
+
+```{r}
+# vcf_sample_filt %>% 
+#   filter(CIP_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+#   filter(CIP_Desiree_GT == CNRS_Desiree_GT,
+#          CIP_Desiree_GT == Cornell_Desiree_GT) %>% 
+#   filter(USDA_Desiree_GT != CIP_Desiree_GT) %>%
+#   nrow()
+```
+
+> 141,064 SNPs between USDA_Desiree and all other Desirees ON CHROMOSOME 7 ALONE. WHAT THE FUCK.
+
+## Why are genotype calls discordant?
+```{r}
+# table(vcf_sample_filt$USDA_Desiree_GT,vcf_sample_filt$CIP_Desiree_GT)
+```
+
+> Most are homozygote -> simplex heterozygote calls.
+Homozygote -> duplex could be alignment problems or CNV.
+
+## Investigate physical positioning of mutations:
+```{r}
+# vcf_sample_open %>% 
+#   parse_mutations(., Cornell_Desiree_GT, CIP_Desiree_GT) %>% 
+#   group_by(test_geno_match) %>% 
+#   tally
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CNRS_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   group_by(test_geno_match) %>% 
+#   tally
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CIP_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   group_by(test_geno_match) %>% 
+#   tally
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = USDA_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   group_by(test_geno_match) %>% 
+#   tally
+```
+
+```{r}
+# vcf_sample_open %>% 
+#   parse_mutations(., Cornell_Desiree_GT, CIP_Desiree_GT) %>% 
+#   ggplot(., aes(x = POS, y = Cornell_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~test_geno_match, ncol = 1, strip.position = "r") +
+#   coord_cartesian(ylim = c(0, 150))
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CNRS_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   ggplot(., aes(x = POS, y = CNRS_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~test_geno_match, ncol = 1, strip.position = "r") +
+#   coord_cartesian(ylim = c(0, 150))
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CIP_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   ggplot(., aes(x = POS, y = CIP_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~test_geno_match, ncol = 1, strip.position = "r") +
+#   coord_cartesian(ylim = c(0, 150))
+# 
+# vcf_sample_open %>% 
+#   parse_mutations(., test_geno = USDA_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   ggplot(., aes(x = POS, y = USDA_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~test_geno_match, ncol = 1, strip.position = "r") +
+#   coord_cartesian(ylim = c(0, 150))
+```
+
+## Scatter plots of all sample-specific genotype calls. X-axis: Chromosome position. Y-axis: Novel allele depth / Total depth
+```{r}
+# cornell_plt <- vcf_sample_open %>% 
+#   parse_mutations(., Cornell_Desiree_GT, CIP_Desiree_GT) %>% 
+#   filter(CIP_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+#   filter(test_geno_match == "mutation") %>% 
+#   mutate(Cornell_Desiree_NDP = ifelse(CIP_Desiree_GT == "0/0/0/0", Cornell_Desiree_AO, Cornell_Desiree_RO)) %>% 
+#   ggplot(., aes(x = POS, y = Cornell_Desiree_NDP / Cornell_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+#   labs(x = "Position (Mb)") +
+#   scale_x_continuous(breaks = seq(0, 8e7, by = 1e7), labels = seq(0, 80, by = 10)) +
+#   coord_cartesian(ylim = c(0, 1))
+# ggsave("2020-11-11-Cornell-mutations-scatter.png", plot = cornell_plt, width = 10, height = 10, units = "in", device = "png")
+# 
+# cnrs_plt <- vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CNRS_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+#   filter(test_geno_match == "mutation") %>% 
+#   mutate(CNRS_Desiree_NDP = ifelse(CIP_Desiree_GT == "0/0/0/0", CNRS_Desiree_AO, CNRS_Desiree_RO)) %>% 
+#   ggplot(., aes(x = POS, y = CNRS_Desiree_NDP / CNRS_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+#   labs(x = "Position (Mb)") +
+#   scale_x_continuous(breaks = seq(0, 8e7, by = 1e7), labels = seq(0, 80, by = 10)) +
+#   coord_cartesian(ylim = c(0, 1))
+# ggsave("2020-11-11-CNRS-mutations-scatter.png", plot = cnrs_plt, width = 10, height = 10, units = "in", device = "png")
+# 
+# cip_plt <- vcf_sample_open %>% 
+#   parse_mutations(., test_geno = CIP_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>%
+#   filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+#   filter(test_geno_match == "mutation") %>% 
+#   mutate(CIP_Desiree_NDP = ifelse(Cornell_Desiree_GT == "0/0/0/0", CIP_Desiree_AO, CIP_Desiree_RO)) %>% 
+#   ggplot(., aes(x = POS, y = CIP_Desiree_NDP / CIP_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+#   labs(x = "Position (Mb)") +
+#   scale_x_continuous(breaks = seq(0, 8e7, by = 1e7), labels = seq(0, 80, by = 10)) +
+#   coord_cartesian(ylim = c(0, 1))
+# ggsave("2020-11-11-CIP-mutations-scatter.png", plot = cip_plt, width = 10, height = 10, units = "in", device = "png")
+# 
+# usda_plt <- vcf_sample_open %>% 
+#   parse_mutations(., test_geno = USDA_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+#   filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>%
+#   filter(test_geno_match == "mutation") %>% 
+#   mutate(USDA_Desiree_NDP = ifelse(Cornell_Desiree_GT == "0/0/0/0", USDA_Desiree_AO, USDA_Desiree_RO)) %>% 
+#   ggplot(., aes(x = POS, y = USDA_Desiree_NDP / USDA_Desiree_DP)) +
+#   geom_point(alpha = 0.1, size = 0.1) +
+#   facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+#   labs(x = "Position (Mb)") +
+#   scale_x_continuous(breaks = seq(0, 8e7, by = 1e7), labels = seq(0, 80, by = 10)) +
+#   coord_cartesian(ylim = c(0, 1))
+# ggsave("2020-11-11-USDA-mutations-scatter.png", plot = usda_plt, width = 10, height = 10, units = "in", device = "png")
+```
+
+## Histograms of all sample-specific genotype calls, 1Mb bin. X-axis: Chromosome position. Y-axis: Count of loci with sample-specific genotype call:
+```{r}
+cornell_hist <- vcf_sample_open %>% 
+  parse_mutations(., Cornell_Desiree_GT, CIP_Desiree_GT) %>% 
+  filter(CIP_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+  filter(test_geno_match == "mutation") %>% 
+  ggplot(., aes(x = POS)) +
+  geom_histogram(binwidth = 1e6) +
+  facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+  labs(x = "Position (Mb)")
+ggsave("2020-11-11-Cornell-mutations-hist.png", plot = cornell_hist, width = 10, height = 10, units = "in", device = "png")
+
+cnrs_hist <- vcf_sample_open %>% 
+  parse_mutations(., test_geno = CNRS_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+  filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+  filter(test_geno_match == "mutation") %>% 
+  ggplot(., aes(x = POS)) +
+  geom_histogram(binwidth = 1e6) +
+  facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+  labs(x = "Position (Mb)")
+ggsave("2020-11-11-CNRS-mutations-hist.png", plot = cnrs_hist, width = 10, height = 10, units = "in", device = "png")
+
+cip_hist <- vcf_sample_open %>% 
+  parse_mutations(., test_geno = CIP_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>%
+  filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>% 
+  filter(test_geno_match == "mutation") %>% 
+  ggplot(., aes(x = POS)) +
+  geom_histogram(binwidth = 1e6) +
+  facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+  labs(x = "Position (Mb)")
+ggsave("2020-11-11-CIP-mutations-hist.png", plot = cip_hist, width = 10, height = 10, units = "in", device = "png")
+
+usda_hist <- vcf_sample_open %>% 
+  parse_mutations(., test_geno = USDA_Desiree_GT, ref_geno = Cornell_Desiree_GT) %>% 
+  filter(Cornell_Desiree_GT %in% c("0/0/0/0", "1/1/1/1")) %>%
+  filter(test_geno_match == "mutation") %>% 
+  ggplot(., aes(x = POS)) +
+  geom_histogram(binwidth = 1e6) +
+  facet_wrap(~CHROM, ncol = 2, strip.position = "r") +
+  labs(x = "Position (Mb)")
+ggsave("2020-11-11-USDA-mutations-hist.png", plot = usda_hist, width = 10, height = 10, units = "in", device = "png")
+```
+
+## Write out to R script to run on server:
+```{r}
+knitr::purl("2020_1103_chr07_mutation_analysis.Rmd")
+```

@@ -17,6 +17,9 @@ params:
         threads: 12
         sort_mem: 4G
         
+    bedtools:
+        window: 100000
+        
     prefetch:
         ascp: "--ascp-path '/share/comailab/kramundson/.aspera/connect/bin/ascp|/home/kramundson/.aspera/connect/etc/asperaweb_id_dsa.openssh' --max-size 50000000000"
         threads: 4

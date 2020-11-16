@@ -1,0 +1,13 @@
+rule bedtools_genome_windows:
+    input:
+        fasta=config["genome"],
+        fai=config["genome"]+".fai",
+    output:
+        bedtools_genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
+        bedtools_windows=re.sub("(\.fasta$|\.fa$)", "100k_windows.bed", config["genome"])
+    params:
+        window=config["params"]["bedtools"]["window"]
+    shell: """
+        awk -v OFS='\t' '{{print $1,$2}}' {input.fai} > {output.bedtools_genome} ;
+        bedtools makewindows -g {output.bedtools_genome} -w {params.window} > {output.bedtools_windows}
+    """

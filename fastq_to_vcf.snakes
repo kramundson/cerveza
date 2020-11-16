@@ -102,10 +102,15 @@ except FileNotFoundError:
 
 rule all:
     input:
+        re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
+        re.sub("(\.fasta$|\.fa$)", "100k_windows.bed", config["genome"]),
         ["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
         ["data/depths/{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
+        ["data/readcounts/{}.bed".format(x) for x in units.index.levels[0]],
         "data/calls/all-calls.vcf"
-    
+
+include: "rules/bedtools_genome_windows.rules"
+include: "rules/bedtools_coverage.rules"
 include: "rules/merge_vcfs.rules"
 include: "rules/freebayes_interval.rules"
 include: "rules/samtools_q20_depth.rules"

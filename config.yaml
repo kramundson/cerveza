@@ -50,7 +50,7 @@ params:
     clipOverlap:
         "--poolSize 10000000"
     
-    freebayes: "--hwe-priors-off --min-mapping-quality 20 --min-base-quality 20 --genotype-qualities --ploidy 4 --use-best-n-alleles 6"
+    freebayes: "--hwe-priors-off --min-mapping-quality 20 --min-base-quality 20 --genotype-qualities --ploidy 4 --cnv-map cnv-map.bed --use-best-n-alleles 6"
 
     # raw mpileup for running maps
     mpup:

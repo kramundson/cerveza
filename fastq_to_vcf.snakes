@@ -28,6 +28,9 @@ def get_intervals(ref, main_size, backup_size=3000):
     
     """
     Identify natural breaks in genome assembly for scatter-gather variant calling
+    
+    Works when the genome assembly is highly fragmented, will crash due to memory overuse
+    with highly contiguous long read assemblies.
     """
     
     intervals = []
@@ -92,6 +95,8 @@ def chunk_by_gap(record, main_size, backup_size=3000, hardcut_size=1e6):
     
     return tmp_int
 
+# manually identify natural breaks in genome assembly if program doesn't find user-supplied variant calling intervals
+# note, this is not optimal for highly contiguous genome assemblies
 try:
     ifh = open(config["intervals"], 'r')
     intervals = []
@@ -104,7 +109,8 @@ rule all:
     input:
         re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
         re.sub("(\.fasta$|\.fa$)", "100k_windows.bed", config["genome"]),
-        ["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
+        # ["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
+        ["data/merged/{}.bam".format(x) for x in units.index.levels[0]],
         ["data/depths/{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
         ["data/readcounts/{}.bed".format(x) for x in units.index.levels[0]],
         "data/calls/all-calls.vcf"

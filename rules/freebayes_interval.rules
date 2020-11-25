@@ -1,8 +1,10 @@
 rule freebayes_interval:
     input:
         ref=config["genome"],
-        bam=["data/realigned/{}.bam".format(x) for x in units.index.levels[0]],
-        bai=["data/realigned/{}.bam.bai".format(x) for x in units.index.levels[0]]
+        bam=["data/merged/{}.bam".format(x) for x in units.index.levels[0]],
+        bai=["data/merged/{}.bam.bai".format(x) for x in units.index.levels[0]]
+        #bam=["data/realigned/{}.bam".format(x) for x in units.index.levels[0]]
+        # bai=["data/realigned/{}.bam.bai".format(x) for x in units.index.levels[0]]
     output:
         "data/calls/interval/{interval}-calls.vcf"
     params:

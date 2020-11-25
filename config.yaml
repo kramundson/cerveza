@@ -2,7 +2,7 @@
 # Units are technical replicates (e.g., lanes or resequencing of the same biological
 # sample).
 units: "units.tsv"
-genome: "ref/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa"
+genome: "ref/DMv6_chloro_mito.fasta"
 intervals: "ref/DM_1-3_variant_scaffolds.bed"
 good_chroms: ["chr01", "chr02", "chr03", "chr04", "chr05", "chr06", "chr07", "chr08", "chr09", "chr10", "chr11", "chr12"]
 final_samples: []

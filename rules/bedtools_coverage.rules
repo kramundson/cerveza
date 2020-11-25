@@ -2,8 +2,10 @@ rule bedtools_coverage:
     input:
         windows=re.sub("(\.fasta$|\.fa$)", "100k_windows.bed", config["genome"]),
         genome=re.sub("(\.fasta$|\.fa$)", ".genome", config["genome"]),
-        bam="data/realigned/{sample}.bam",
-        bai="data/realigned/{sample}.bam.bai"
+        bam="data/merged/{sample}.bam",
+        bai="data/merged/{sample}.bam.bai"
+        # bam="data/realigned/{sample}.bam",
+        # bai="data/realigned/{sample}.bam.bai"
     output:
         "data/readcounts/{sample}.bed"
     shell: '''

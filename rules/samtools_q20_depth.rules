@@ -1,6 +1,7 @@
 rule samtools_q20_depth:
     input:
-        "data/realigned/{sample}.bam"
+        # "data/realigned/{sample}.bam"
+        "data/merged/{sample}.bam"
     output:
         "data/depths/{sample}_q20_depth.bed"
     params:

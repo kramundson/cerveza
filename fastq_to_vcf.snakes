@@ -121,8 +121,8 @@ include: "rules/merge_vcfs.rules"
 include: "rules/freebayes_interval.rules"
 include: "rules/samtools_q20_depth.rules"
 include: "rules/samtools_q0_depth.rules"
-include: "rules/realign_indels.rules" # testing placement at this point in the workflow, rule rewritten
-include: "rules/realigner_target_creator.rules" # testing placement at this point in the workflow, rule rewritten
+# include: "rules/realign_indels.rules" # testing placement at this point in the workflow, rule rewritten
+# include: "rules/realigner_target_creator.rules" # testing placement at this point in the workflow, rule rewritten
 include: "rules/samtools_index_pe.rules" # change for later indel realign
 include: "rules/samtools_merge.rules" # change for later indel realign
 include: "rules/clip_overlap.rules" # changed for later indel realign

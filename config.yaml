@@ -3,7 +3,7 @@
 # sample).
 units: "units.tsv"
 genome: "ref/DMv6_chloro_mito.fasta"
-intervals: "ref/DM_1-3_variant_scaffolds.bed"
+intervals: "ref/DMv6_chloro_mito_100k_windows.bed"
 good_chroms: ["chr01", "chr02", "chr03", "chr04", "chr05", "chr06", "chr07", "chr08", "chr09", "chr10", "chr11", "chr12"]
 final_samples: []
 windows: "ref/DM_1-3_10kb_windows.bed"

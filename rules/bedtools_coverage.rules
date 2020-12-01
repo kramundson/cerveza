@@ -8,7 +8,18 @@ rule bedtools_coverage:
         # bai="data/realigned/{sample}.bam.bai"
     output:
         "data/readcounts/{sample}.bed"
-    shell: '''
-        bedtools coverage -sorted -nonamecheck -header -g {input.genome} \
-            -F 0.5 -a {input.windows} -b {input.bam} > {output}
-    '''
+    log:
+        "log/readcounts/{sample}.log"
+    shell: """
+        samtools view -b -q 20 {input.bam} | \
+        bedtools coverage \
+            -sorted \
+            -nonamecheck \
+            -header \
+            -g {input.genome} \
+            -F 0.5 \
+            -a {input.windows} \
+            -b stdin \
+            > {output} \
+            2> {log}
+        """

@@ -8,7 +8,8 @@ rule freebayes_interval:
     output:
         "data/calls/interval/{interval}-calls.vcf"
     params:
-        interval=lambda wildcards: re.sub(r"_(\d+)_", r"-\1:", wildcards.interval[::-1])[::-1],
+        # interval=lambda wildcards: re.sub(r"_(\d+)_", r"-\1:", wildcards.interval[::-1])[::-1],
+        interval = lambda wildcards: "{}:{}-{}".format("_".join(wildcards.interval.split("_")[::-2][::-1]), wildcards.interval.split("_")[::-1][1], wildcards.interval.split("_")[::-1][0]),
         options=config["params"]["freebayes"]
     log:
         "log/freebayes/{interval}.log"

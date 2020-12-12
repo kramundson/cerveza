@@ -20,4 +20,4 @@ samtools faidx DMv6_chloro_mito.fasta
 picard CreateSequenceDictionary R=DMv6_chloro_mito.fasta
 cut -f 1-2 DMv6_chloro_mito.fasta.fai > DMv6_chloro_mito.genome
 bwa index DMv6_chloro_mito.fasta
-bedtools makewindows -g DMv6_chloro_mito.genome -w 100000 > DMv6_chloro_mito_100k_windows.bed
+bedtools makewindows -g DMv6_chloro_mito.genome -w 100000 | grep "chr\|scaffold" > DMv6_chloro_mito_100k_windows.bed

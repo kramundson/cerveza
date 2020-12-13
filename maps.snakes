@@ -70,7 +70,7 @@ rule maps_part1:
     log:
         "log/maps/{cohort}_{chrom}_maps_part1.log"
     params:
-        "--MinLibs 3 --minCov 150 --maxCov 1000 --hetBothMinPer 95 --hetOneMinPer 12.5 --minCovNonMutBase 5 --mode m"
+        "--MinLibs 4 --minCov 80 --maxCov 500 --hetBothMinPer 95 --hetOneMinPer 12.5 --minCovNonMutBase 5 --mode m"
     threads: 12
     shell: """
         python2 scripts/maps-part1-v2.py \
@@ -90,7 +90,7 @@ rule maps_part2:
     log:
         "log/maps/{cohort}_{chrom}_maps_part1.log"
     params:
-        "--MinLibs 3 --mode m --minCov 150 --hetMinCov 5 --hetMinPer 12.5 --homMinCov 8"
+        "--MinLibs 4 --mode m --minCov 80 --hetMinCov 5 --hetMinPer 12.5 --homMinCov 8"
     shell: """
         python2 scripts/maps-part2-v2.py \
             --file {input} \

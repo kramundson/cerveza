@@ -1,63 +1,67 @@
 shell.executable("bash")
 configfile: "config.yaml"
 CHROMS = config["good_chroms"]
-SAMPLES = ["USDA_Desiree", "CIP_Desiree"]
+SAMPLES = ["USDA_Desiree", "MF_104_"] # todo adjust
 
 rule all:
     input:
         # expand("data/pileup/{cohort}_{chrom}_parsed_pileup.txt", cohort=["nonregen", "regen", "USDAout"], chrom=config["good_chroms"]),
-        expand("data/maps/{cohort}_{chrom}_maps_part2.txt", cohort=["nonregen", "regen", "USDAout"], chrom=config["good_chroms"])
+        # expand("data/maps/{cohort}_{chrom}_maps_part2.txt", cohort=["nonregen", "regen", "USDAout"], chrom=config["good_chroms"])
+        expand("data/maps/{cohort}_{chrom}_maps_part2.txt", cohort=["regen_nonredundant"], chrom=config["good_chroms"])
 
-rule run_mpileup:
-    input:
-        bam=expand("data/merged/{sample}.bam", sample=SAMPLES),
-        bai=expand("data/merged/{sample}.bai", sample=SAMPLES),
-        ref=config["genome"]
-    output:
-        "data/pileup/pileup.txt"
-    log:
-        "log/pileup/pileup.log"
-    threads: 12
-    shell: """
-        for i in {input.bam} ; do ln -s $i $(echo $i | sed -e 's/.bam$/.sorted.bam/g') ; done
-        python2 scripts/beta-run-mpileup-KRA.py \
-            -r {input.ref} \
-            -o {output} \
-            -s $(which samtools) \
-            -t {threads} \
-            > {log} 2>&1
-    """
-
-rule parse_mpileup:
-    input:
-        "data/pileup/pileup.txt"
-    output:
-        "data/pileup/parsed_pileup.txt"
-    log:
-        "log/pileup/parse_pileup.log"
-    threads: 12
-    shell: """
-        python2 scripts/mpileup-parser-v2.py \
-            -f {input} \
-            -t {threads} \
-            > {log} 2>&1
-    """
+# rule run_mpileup:
+#     input:
+#         bam=expand("data/merged/{sample}.bam", sample=SAMPLES),
+#         bai=expand("data/merged/{sample}.bai", sample=SAMPLES),
+#         ref=config["genome"]
+#     output:
+#         "data/pileup/pileup.txt"
+#     log:
+#         "log/pileup/pileup.log"
+#     threads: 12
+#     shell: """
+#         for i in {input.bam} ; do ln -s $i $(echo $i | sed -e 's/.bam$/.sorted.bam/g') ; done
+#         python2 scripts/beta-run-mpileup-KRA.py \
+#             -r {input.ref} \
+#             -o {output} \
+#             -s $(which samtools) \
+#             -t {threads} \
+#             > {log} 2>&1
+#     """
+# 
+# rule parse_mpileup:
+#     input:
+#         "data/pileup/pileup.txt"
+#     output:
+#         "data/pileup/parsed_pileup.txt"
+#     log:
+#         "log/pileup/parse_pileup.log"
+#     threads: 12
+#     shell: """
+#         python2 scripts/mpileup-parser-v2.py \
+#             -f {input} \
+#             -t {threads} \
+#             > {log} 2>&1
+#     """
 
 rule hack_parsed:
     input:
-        "data/pileup/parsed_pileup.txt"
+        "data/pileup/parsed_pileup_Desirees.txt"
     output:
         temp("data/pileup/{chrom}_parsed_pileup.txt"),
+        "data/pileup/regen_nonredundant_{chrom}_parsed_pileup.txt",
         "data/pileup/nonregen_{chrom}_parsed_pileup.txt",
         "data/pileup/regen_{chrom}_parsed_pileup.txt",
         "data/pileup/USDAout_{chrom}_parsed_pileup.txt",
     shell: """
         grep '^C\|{wildcards.chrom}' {input} > {output[0]}
-        cut -f 1-15,88-91 {output[0]} > {output[1]}
-        cut -f 1-3,20-91 {output[0]} > {output[2]}
-        cut -f 1-15 {output[0]} > {output[3]}
+        cut -f 1-3,20-39,44-47,52-59,64-67,72-75,80-91 {output[0]} > {output[1]}
+        cut -f 1-15,88-91 {output[0]} > {output[2]}
+        cut -f 1-3,20-91 {output[0]} > {output[3]}
+        cut -f 1-15 {output[0]} > {output[4]}
     """
 
+# parameters specific to regen cohort!
 rule maps_part1:
     input:
         "data/pileup/{cohort}_{chrom}_parsed_pileup.txt"
@@ -66,22 +70,18 @@ rule maps_part1:
     log:
         "log/maps/{cohort}_{chrom}_maps_part1.log"
     params:
+        "--MinLibs 3 --minCov 150 --maxCov 1000 --hetBothMinPer 95 --hetOneMinPer 12.5 --minCovNonMutBase 5 --mode m"
     threads: 12
     shell: """
         python2 scripts/maps-part1-v2.py \
             --file {input} \
             --out {output} \
-            --MinLibs 6 \
-            --thread 10 \
-            --minCov 180 \
-            --maxCov 1250 \
-            --hetBothMinPer 95 \
-            --hetOneMinPer 12.5 \
-            --minCovNonMutBase 5 \
-            --mode m \
+            --thread {threads} \
+            {params} \
             > {log} 2>&1
     """
 
+# parameters specific to regen cohort!
 rule maps_part2:
     input:
         "data/maps/{cohort}_{chrom}_maps_part1.txt"
@@ -90,16 +90,11 @@ rule maps_part2:
     log:
         "log/maps/{cohort}_{chrom}_maps_part1.log"
     params:
-    threads: 12
+        "--MinLibs 3 --mode m --minCov 150 --hetMinCov 5 --hetMinPer 12.5 --homMinCov 8"
     shell: """
         python2 scripts/maps-part2-v2.py \
             --file {input} \
             --out {output} \
-            --MinLibs 6 \
-            --mode m \
-            --minCov 180 \
-            --hetMinCov 5 \
-            --hetMinPer 12.5  \
-            --homMinCov 8 \
+            {params} \
             > {log} 2>&1
     """

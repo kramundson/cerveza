@@ -70,6 +70,8 @@ parser.add_option("--mode", "-m", dest="mode",  type = "str", default='m', help=
 if not os.path.isdir(os.path.dirname(opt.o)):
     os.mkdirs(os.path.dirname(opt.o))
 
+print(opt.f)
+
 try:
    #1. input mpileup file
    f = open(opt.f)
@@ -77,12 +79,12 @@ try:
    o = open(opt.o,'w')
    #3 Non-assay file, for libraries that get removed due to cutoff paramters
    # na = open("non-assay-"+opt.f,'w')
-   na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))))
+   na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))), 'w')
 except IOError:
    f = open(eval(opt.f))
    o = open(eval(opt.o),'w')
    # na = open("non-assay-"+eval(opt.f),'w')
-   na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))), 'w')
+   # na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))), 'w')
 except:
    parser.error("Please check your command line paramters with -h or --help")
 

@@ -1,7 +1,7 @@
 shell.executable("bash")
 configfile: "config.yaml"
 CHROMS = config["good_chroms"]
-SAMPLES = ["USDA_Desiree", "MF_104_"] # todo adjust
+# SAMPLES = ["USDA_Desiree", "MF_104_"] # todo adjust
 
 rule all:
     input:
@@ -88,7 +88,7 @@ rule maps_part2:
     output:
         "data/maps/{cohort}_{chrom}_maps_part2.txt"
     log:
-        "log/maps/{cohort}_{chrom}_maps_part1.log"
+        "log/maps/{cohort}_{chrom}_maps_part2.log"
     params:
         "--MinLibs 4 --mode m --minCov 80 --hetMinCov 5 --hetMinPer 12.5 --homMinCov 8"
     shell: """

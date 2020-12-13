@@ -49,10 +49,10 @@ rule hack_parsed:
         "data/pileup/parsed_pileup_Desirees.txt"
     output:
         temp("data/pileup/{chrom}_parsed_pileup.txt"),
-        "data/pileup/regen_nonredundant_{chrom}_parsed_pileup.txt",
-        "data/pileup/nonregen_{chrom}_parsed_pileup.txt",
-        "data/pileup/regen_{chrom}_parsed_pileup.txt",
-        "data/pileup/USDAout_{chrom}_parsed_pileup.txt",
+        temp("data/pileup/regen_nonredundant_{chrom}_parsed_pileup.txt"),
+        temp("data/pileup/nonregen_{chrom}_parsed_pileup.txt"),
+        temp("data/pileup/regen_{chrom}_parsed_pileup.txt"),
+        temp("data/pileup/USDAout_{chrom}_parsed_pileup.txt"),
     shell: """
         grep '^C\|{wildcards.chrom}' {input} > {output[0]}
         cut -f 1-3,20-39,44-47,52-59,64-67,72-75,80-91 {output[0]} > {output[1]}

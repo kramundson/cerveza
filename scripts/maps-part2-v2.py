@@ -72,11 +72,13 @@ try:
    #2. output file
    o = open(opt.o,'w')
    #3 Non-assay file, for libraries that get removed due to cutoff paramters
-   na = open("non-assay-"+opt.f,'w')
+   # na = open("non-assay-"+opt.f,'w')
+   na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))))
 except IOError:
    f = open(eval(opt.f))
    o = open(eval(opt.o),'w')
-   na = open("non-assay-"+eval(opt.f),'w')
+   # na = open("non-assay-"+eval(opt.f),'w')
+   na = open(os.path.join(os.path.dirname(opt.f), "non-assay-{}".format(os.path.basename(opt.f))), 'w')
 except:
    parser.error("Please check your command line paramters with -h or --help")
 

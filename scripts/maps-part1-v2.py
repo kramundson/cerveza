@@ -492,7 +492,8 @@ o.close()
 
 # write snps --------------------------------------------------------------
 try:
-   t = open("snps-"+opt.f,'w')
+   # t = open("snps-"+opt.f,'w')
+   t = open(os.path.join(os.path.dirname(opt.f), "snps-{}".format(os.path.basename(opt.f))))
 except:    
    parser.error("SNPs: Please check your command line paramters with -h or --help")
 
@@ -505,9 +506,10 @@ t.close()
 if opt.hetout == True:
    # write hets --------------------------------------------------------------
    try:
-      ts = open("hets-"+opt.f,'w')
+      # ts = open("hets-"+opt.f,'w')
+      ts = open(os.path.join(os.path.dirname(opt.f), "hets-{}".format(os.path.basename(opt.f))))
    except:    
-      parser.error("hetss: Please check your command line paramters with -h or --help")
+      parser.error("hets: Please check your command line paramters with -h or --help")
    
    ts.write(outhead)
    for x in allhets:
@@ -517,7 +519,8 @@ if opt.hetout == True:
 
 # write out type counts -----------------------------------------------------
 try:
-   d = open("type-"+opt.f,'w')
+   # d = open("type-"+opt.f,'w')
+   d = open(os.path.join(os.path.dirname(opt.f), "type-{}".format(os.path.basename(opt.f))))
 except:    
    parser.error("type: Please check your command line paramters with -h or --help")
    
@@ -534,9 +537,11 @@ d.close()
 #join all assays and write out master assay ----------------------------------
 try:
    if opt.g == False:
-      j = open("assay-"+opt.f,'w')
+      # j = open("assay-"+opt.f,'w')
+      j = open(os.path.join(os.path.dirname(opt.f), "assay-{}".format(os.path.basename(opt.f))))
    else:
-      j = open("non-target-assay-"+opt.f,'w')
+      # j = open("non-target-assay-"+opt.f,'w')
+      j = open(os.path.join(os.path.dirname(opt.f), "non-target-assay-{}".format(os.path.basename(opt.f))))
 except:    
    parser.error("assay: Please check your command line paramters with -h or --help")
 
@@ -562,7 +567,8 @@ j.close()
 #join all assays and write out master assay ----------------------------------
 if opt.g != False:
    try:
-      j = open("target-assay-"+opt.f,'w')
+      # j = open("target-assay-"+opt.f,'w')
+      j = open(os.path.join(os.path.dirname(opt.f), "target-assay-{}".format(os.path.basename(opt.f))))
    except:    
       parser.error("targetassay: Please check your command line paramters with -h or --help")
    

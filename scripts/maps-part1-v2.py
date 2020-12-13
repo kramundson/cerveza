@@ -362,6 +362,9 @@ class MyThread (multiprocessing.Process):
 #   rem = pos % 10000
 #   key2 = 
 
+# recursive make output dir, KRA added for snakemake
+if not os.path.isdir(os.path.dirname(opt.o)):
+    os.mkdirs(os.path.dirname(opt.o))
 
 try:
    f = open(opt.f)
@@ -493,7 +496,7 @@ o.close()
 # write snps --------------------------------------------------------------
 try:
    # t = open("snps-"+opt.f,'w')
-   t = open(os.path.join(os.path.dirname(opt.f), "snps-{}".format(os.path.basename(opt.f))))
+   t = open(os.path.join(os.path.dirname(opt.o), "snps-{}".format(os.path.basename(opt.o))), 'w')
 except:    
    parser.error("SNPs: Please check your command line paramters with -h or --help")
 
@@ -507,7 +510,7 @@ if opt.hetout == True:
    # write hets --------------------------------------------------------------
    try:
       # ts = open("hets-"+opt.f,'w')
-      ts = open(os.path.join(os.path.dirname(opt.f), "hets-{}".format(os.path.basename(opt.f))))
+      ts = open(os.path.join(os.path.dirname(opt.o), "hets-{}".format(os.path.basename(opt.o))), 'w')
    except:    
       parser.error("hets: Please check your command line paramters with -h or --help")
    
@@ -520,7 +523,7 @@ if opt.hetout == True:
 # write out type counts -----------------------------------------------------
 try:
    # d = open("type-"+opt.f,'w')
-   d = open(os.path.join(os.path.dirname(opt.f), "type-{}".format(os.path.basename(opt.f))))
+   d = open(os.path.join(os.path.dirname(opt.o), "type-{}".format(os.path.basename(opt.o))), 'w')
 except:    
    parser.error("type: Please check your command line paramters with -h or --help")
    
@@ -538,10 +541,10 @@ d.close()
 try:
    if opt.g == False:
       # j = open("assay-"+opt.f,'w')
-      j = open(os.path.join(os.path.dirname(opt.f), "assay-{}".format(os.path.basename(opt.f))))
+      j = open(os.path.join(os.path.dirname(opt.o), "assay-{}".format(os.path.basename(opt.o))),'w')
    else:
       # j = open("non-target-assay-"+opt.f,'w')
-      j = open(os.path.join(os.path.dirname(opt.f), "non-target-assay-{}".format(os.path.basename(opt.f))))
+      j = open(os.path.join(os.path.dirname(opt.o), "non-target-assay-{}".format(os.path.basename(opt.o))), 'w')
 except:    
    parser.error("assay: Please check your command line paramters with -h or --help")
 
@@ -568,7 +571,7 @@ j.close()
 if opt.g != False:
    try:
       # j = open("target-assay-"+opt.f,'w')
-      j = open(os.path.join(os.path.dirname(opt.f), "target-assay-{}".format(os.path.basename(opt.f))))
+      j = open(os.path.join(os.path.dirname(opt.o), "target-assay-{}".format(os.path.basename(opt.o))), 'w')
    except:    
       parser.error("targetassay: Please check your command line paramters with -h or --help")
    

@@ -66,6 +66,10 @@ parser.add_option("-l", "--MinLibs", dest="minlibs", type = "int", default=3, he
 parser.add_option("--mode", "-m", dest="mode",  type = "str", default='m', help="Output Mode:  m==Mutation Detection,  g==Genotyping")
 (opt, args) = parser.parse_args()
 
+# recursive make output dir, KRA added for snakemake
+if not os.path.isdir(os.path.dirname(opt.o)):
+    os.mkdirs(os.path.dirname(opt.o))
+
 try:
    #1. input mpileup file
    f = open(opt.f)

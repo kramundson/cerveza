@@ -3,18 +3,19 @@ rule merge_vcfs:
         vcfs=["data/calls/interval/{}-calls.vcf".format(re.sub("\t", "_", x)) for x in intervals],
         intervals=config["intervals"]
     output:
-        "data/calls/all-calls.vcf"
+        "data/calls/{chrom}-calls.vcf"
     params:
         jarpath=config["params"]["mark_duplicates"]["jarpath"],
         java_heap=config["params"]["mark_duplicates"]["java_heap"]
     log:
-        "logs/cat_vcfs.log"
+        "logs/{chrom}_vcfs.log"
     shell: """
         sed -e 's/^/data\/calls\/interval\//g' \
             -e 's/$/-calls.vcf/g' {input.intervals} | \
-        tr "\t" "_" > scaffold_calls.list
+        grep {wildcards.chrom} | \
+        tr '\t' '_' > {wildcards.chrom}_scaffold_calls.list
         java {params.java_heap} -jar {params.jarpath} MergeVcfs \
-            I=scaffold_calls.list \
+            I={wildcards.chrom}_scaffold_calls.list \
             O={output} \
             2> {log}
     """

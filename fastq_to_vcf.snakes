@@ -113,7 +113,8 @@ rule all:
         ["data/merged/{}.bam".format(x) for x in units.index.levels[0]],
         ["data/depths/{}_q20_depth.bed".format(x) for x in units.index.levels[0]],
         ["data/readcounts/{}.bed".format(x) for x in units.index.levels[0]],
-        "data/calls/all-calls.vcf"
+        ["data/calls/{}-calls.vcf".format(x) for x in config["good_chroms"]]
+        # "data/calls/all-calls.vcf"
 
 include: "rules/bedtools_genome_windows.rules"
 include: "rules/bedtools_coverage.rules"

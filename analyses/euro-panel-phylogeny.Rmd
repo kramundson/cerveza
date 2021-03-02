@@ -338,7 +338,23 @@ filter(solcap_v6_coords, attributes %in% euro_recoded$SNP) %>%
   write_tsv("solcap_v6_snp_for_euro_phylo.gff", col_names = F)
 ```
 
-## Add individuals with sequence-based SNP calls to SNP matrix, then remake UPGMA tree:
+## On server, intersect variant calls with recoded SNPs, decompose calls to allelic primitives, then annotate intersecting SNP:
+```
+#!/bin/bash
+cd /cato2pool/backup-share/kramundson/cerveza/data/calls
+conda activate oak
+bedtools intersect -sorted -header -a chr01-calls.vcf.gz -b solcap_v6_for_euro_phylo.gff > all-calls-euro-phylo.vcf
+for i in chr{02..12}-calls.vcf.gz
+do
+  bedtools intersect -sorted -a $i -b solcap_v6_for_euro_phylo.gff >> all-calls-euro-phylo.vcf
+done
+
+gzip all-calls-euro-phylo.vcf
+vcfallelicprimitives -g all-calls-euro-phylo.vcf | gzip > split-mnp-calls-euro-phylo.vcf.gz
+bedtools intersect -header -a split-mnp-calls-euro-phylo.vcf.gz -b solcap_v6_for_euro_phylo.gff -wb | gzip > wb-split-calls-euro-phylo.vcf.gz
+```
+
+## Add individuals with sequence-based SNP calls to SNP matrix, then remake tree:
 ```{r}
 file <- "wb-split-calls-euro-phylo.vcf.gz"
 vcf_header <- system(paste0("zgrep '^#C' ", file), intern = T) %>% 
@@ -460,9 +476,9 @@ write.tree(UPGMA, file = "solcap_euro_seq_UPGMA_2021_0301.tre")
 write.tree(nj, file = "solcap_euro_seq_NJ_2021_0301.tre")
 ```
 ## Follow up actions:
-1. Email MSU to see whether Urgenta or Depesche are in their SNP database
-2. Request genomic DNA of Urgenta or Depesche from European gemrplasm database
-3. Request Depesche and/or Urgenta cuttings from Sturgeon Bay
+1. Email MSU to see whether Urgenta or Depesche are in their SNP database. Done.
+2. Request genomic DNA of Urgenta or Depesche from European gemrplasm database. Depesche gDNA requested.
+3. Request Depesche and/or Urgenta cuttings from Sturgeon Bay. Urgenta ordered - Depesche not available.
 
 [1]: https://academic.oup.com/g3journal/article/8/10/3185/6026984?login=true
 [2]: https://www.g3journal.org/content/3/6/1003

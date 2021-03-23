@@ -1,0 +1,430 @@
+---
+title: "Potato Phylogeny Clean"
+author: "Kirk Amundson"
+date: 2021_0322
+output: html_notebook
+---
+
+Aim: Build a phylogeny using array-genotyped European potato clones from 
+![Sharma et al (2018) G3][1], ![Hirsch et al (2013) G3][2], 
+![Vos et al., (2015) TAG](3) later published by 
+![Prodhomme et al., (2020) TAG](4), sequencing data from 
+![Hardigan et al (2017) PNAS][5], and my resequencing of Desiree clones.
+
+Question: Is USDA Desiree another clone represented in any of these panels?
+
+### Libraries:
+```{r}
+library(tidyverse)
+library(viridis)
+library(readxl)
+library(ape)
+library(phangorn)
+```
+
+### Functions:
+```{r}
+sep <- function(...) {
+  dots <- list(...)
+  separate_(..., into = paste(dots[[2]], attributes, sep = "_"), convert = T, sep = ":")
+}
+```
+
+### Explore genotyping data from Prodhomme et al (2020):
+```{r}
+dutch <- read_excel("122_2020_3559_MOESM3_ESM.xlsx", skip = 2, sheet = 2, na = "NA")
+head(dutch)
+```
+
+> Genotypes coded as counts of the major allele wrt this panel.
+Use redundant clones across panels to determine whether dutch major allele
+is the REF allele.
+
+```{r}
+dpiv <- dutch %>% 
+  rename(SNP = Marker) %>% 
+  select(-`Marker sampled for vanRaden kinship calculation (with replacement)`) %>% 
+  rename_with(., ~ paste0(.x, "_dutch"), .cols = -SNP) %>% 
+  pivot_longer(-SNP, names_to = "name", values_to = "geno") %>% 
+  pivot_wider(names_from = SNP, values_from = "geno")
+head(dpiv)
+```
+
+```{r}
+dmiss <- apply(dpiv[, 2:ncol(dpiv)], 2, function(x) length(which(is.na(x))) / length(x))
+dmiss_df <- tibble(snp = names(dmiss),
+                      perc_na = 100 * dmiss)
+ggplot(dmiss_df, aes(x = perc_na)) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = 10, color = "red", linetype = "dashed")
+```
+
+```{r}
+# impute
+dimp <- dpiv %>% 
+  select(-all_of(names(which(dmiss_df$perc_na > 10)))) %>% 
+  mutate(across(contains("snp"), function(x) replace_na(x, mean(x, na.rm = T))))
+dim(dimp)
+```
+
+```{r}
+dmx <- dimp %>% 
+  select(-name) %>% 
+  dist(method = "euclidean") %>% 
+  as.matrix()
+rownames(dmx) <- dimp$name
+colnames(dmx) <- dimp$name
+```
+
+```{r}
+dupgma <- upgma(dmx)
+write.tree(dupgma, file = "dutch-phylo.tre")
+```
+
+### Explore genotyping data from Hirsch et al (2013):
+```{r}
+solcap <- read_excel("TableS4.xlsx", col_names = T, skip = 1, na = ".")
+head(solcap)
+```
+
+> Genotypes are coded as [ATCG]{4} by base. Can get REF and ALT allele
+definition from the DM genotypes in this panel, but they could be reverse
+complemented wrt the reference genome.
+This I need to check against the DM calls in the VCF.
+
+> Before reading in the VCF calls, determine exactly those SNP positions to
+intersect using the merged dutch and solcap panels.
+
+### Explore genotyping data from Sharma et al (2018):
+```{r}
+euro <- read_excel("~/Downloads/Table S10.xlsx", col_names = T, sheet = 1, na = "-9")
+head(euro)
+```
+
+### Merge the Dutch, SolCAP and Euro panels:
+```{r}
+dutch_pivot <- dutch %>% 
+  rename(SNP = Marker) %>% 
+  select(-`Marker sampled for vanRaden kinship calculation (with replacement)`) %>% 
+  rename_with(., ~ paste0(.x, "_dutch"), .cols = -SNP)
+head(dutch_pivot)
+```
+
+```{r}
+solcap_pivot <- solcap %>%
+  rename_with(., ~ paste0(.x, "_solcap"), .cols = -SNP)
+head(solcap_pivot)
+```
+
+```{r}
+euro_pivot <- euro %>% 
+  pivot_longer(cols = -Name, names_to = "SNP", values_to = "geno") %>% 
+  mutate(Name = paste0(Name, "_euro")) %>% 
+  pivot_wider(names_from = Name, values_from = geno)
+head(euro_pivot)
+```
+
+```{r}
+dse <- inner_join(solcap_pivot, euro_pivot, by="SNP") %>% 
+  inner_join(., dutch_pivot, by="SNP")
+dim(dse)
+head(dse)
+```
+
+> To get VCF genotypes at these loci, extract DM1-3 v6.1 coordinates of as many
+SNPs as possible.
+
+### Intersect SNPs in combined panel with SNPs that have known positions on the DM1-3 v6.1 reference:
+```{r}
+gff_cols <- c("seqid", "source", "type", "start", "end", "score", "strand", "phase", "gff_attributes")
+
+solcap_v6_coords <- read_tsv("potato_array_SNPs_v6_liftover.gff3",
+                             col_names = gff_cols,
+                             comment = "#")
+head(solcap_v6_coords)
+```
+
+```{r}
+anchored_dse <- solcap_v6_coords %>% 
+  filter(gff_attributes %in% dse$SNP) %>% 
+  arrange(seqid, start, end)
+dim(anchored_dse)
+```
+
+### Write intersecting SNPs to GFF3 file:
+```{r}
+write_tsv(anchored_dse, "v6_snp_for_phylo.gff", col_names = F)
+```
+
+### Bedtools intersect SNPs with raw VCFs:
+```
+#!/bin/bash
+cd /cato2pool/backup-share/kramundson/cerveza/data/calls
+conda activate oak
+bedtools intersect -sorted -header -a chr01-calls.vcf.gz -b v6_snp_for_phylo.gff > calls-for-phylo.vcf
+for i in chr{02..12}-calls.vcf.gz
+do
+  bedtools intersect -sorted -a $i -b v6_snp_for_phylo.gff >> calls-for-phylo.vcf
+done
+
+vcfallelicprimitives -g calls-for-phylo.vcf > split-calls-for-phylo.vcf
+bedtools intersect -header -a split-calls-for-phylo.vcf -b v6_snp_for_phylo.gff -wb | gzip > wb-split-calls-for-phylo.vcf.gz
+```
+
+### Identify which of Euro alleles A and B are SolCAP REF/ALT:
+```{r}
+# approach: using duplicated clones across the solcap and european panels,
+# determine what the definition of alleles "A" and "B" are by majority vote
+# Then, recode AB notation as REF/ALT notation
+euro_ab <- dse %>% 
+  select(SNP, ends_with("euro"), ends_with("solcap")) %>% 
+  
+  pivot_longer(cols = c(ends_with("euro"), ends_with("solcap")), names_to = "name", values_to = "geno") %>%
+  mutate(study = str_extract(name, "[a-z]{1,}$")) %>%
+  mutate(bioid = str_remove(name, "_[a-z]{1,}$")) %>% 
+  select(-name) %>% 
+  pivot_wider(names_from = study, values_from = geno) 
+head(euro_ab)
+```
+
+```{r}
+solcap_long <- solcap %>%
+  mutate(study = "solcap") %>% 
+  mutate(REF = str_extract(`DM1-3 516 R44`, "[ATCG]{1}")) %>% 
+  select(SNP, REF, everything()) %>% 
+  unite(., ALT, -c(SNP, REF), sep = "", na.rm = T, remove = F) %>% 
+  mutate(ALT = str_remove_all(ALT, REF) %>% str_extract("[ATCG]{1}")) %>%
+  pivot_longer(-c(SNP, REF, ALT), names_to = "name", values_to = "solcap_geno")
+head(solcap_long)
+```
+
+```{r}
+euro_long <- euro %>% 
+  pivot_longer(-Name, names_to = "SNP", values_to = "euro_geno") %>% 
+  rename(name = Name)
+head(euro_long)
+```
+
+```{r}
+se_long <- inner_join(solcap_long, euro_long)
+head(se_long)
+```
+
+```{r}
+ab_def <- se_long %>% 
+  arrange(name) %>% 
+  mutate(solcap_ref_count = str_count(solcap_geno, REF),
+         solcap_alt_count = str_count(solcap_geno, ALT)) %>% 
+  mutate(euro_a_count = str_count(euro_geno, "A"),
+         euro_b_count = str_count(euro_geno, "B")) %>% 
+  filter(solcap_ref_count != 2 & solcap_alt_count != 2 & euro_a_count != 2 & euro_b_count != 2) %>% 
+  mutate(euro_a_allele = case_when(solcap_ref_count == euro_a_count ~ REF,
+                                   solcap_alt_count == euro_a_count ~ ALT)) %>% 
+  mutate(euro_b_allele = case_when(solcap_ref_count == euro_b_count ~ REF,
+                                   solcap_alt_count == euro_b_count ~ ALT)) %>% 
+  filter(!is.na(euro_a_allele) & !is.na(euro_b_allele)) %>% 
+  mutate(euro_recode = paste0(str_dup(euro_b_allele, euro_b_count), str_dup(euro_a_allele, euro_a_count))) %>% 
+  group_by(SNP, REF, ALT, euro_a_allele, euro_b_allele) %>% 
+  tally() %>% 
+  filter(n >= 5) %>% 
+  group_by(SNP) %>% 
+  filter(! duplicated(SNP)) %>% 
+  ungroup() 
+head(ab_def)
+```
+
+```{r}
+# maybe do this later?
+recoded_euro <- inner_join(se_long, ab_def) %>% 
+  filter(!is.na(n)) %>% 
+  mutate(euro_recode = paste0(str_dup(euro_b_allele, str_count(euro_geno, "B")), str_dup(euro_a_allele, str_count(euro_geno, "A")))) %>% 
+  select(-n)
+head(recoded_euro)
+```
+
+### Identify which of Dutch alleles are SolCAP REF/ALT:
+```{r}
+# approach: using dupliated clones across the dutch and remaining panels,
+# determine whether the major or minor allele are REF or ALT by majority vote among duplicates
+# Then, recode dutch notation as REF/ALT
+```
+
+```{r}
+# todo fix coding of dutch major and minor allele so that it's consistent across individuals
+def_dutch_alleles <- dutch %>% 
+  select(-`Marker sampled for vanRaden kinship calculation (with replacement)`) %>% 
+  rename(SNP = Marker) %>% 
+  pivot_longer(cols = -SNP, names_to = "name", values_to = "dutch_geno") %>% 
+  # filter(name %in% recoded_euro$name) %>% 
+  inner_join(., recoded_euro) %>%
+  mutate(ref_count = str_count(solcap_geno, REF),
+         alt_count = str_count(solcap_geno, ALT)) %>% 
+  mutate(dutch_minor = case_when(ref_count == dutch_geno ~ REF,
+                                 alt_count == dutch_geno ~ ALT)) %>% 
+  mutate(dutch_major = case_when(dutch_minor == REF ~ ALT,
+                                 dutch_minor == ALT ~ REF)) %>% 
+  # mutate(dutch_recode = paste0( str_dup(dutch_major, 4-dutch_geno), str_dup(dutch_minor, dutch_geno))) %>% 
+  filter(dutch_geno != 2) %>% 
+  select(SNP, REF, ALT, euro_a_allele, euro_b_allele, dutch_major, dutch_minor) %>% 
+  distinct() %>% 
+  filter(!is.na(dutch_major) & !is.na(dutch_minor))
+head(def_dutch_alleles)
+```
+
+```{r}
+dim(dse)
+dim(def_dutch_alleles)
+```
+
+
+### Recode genotyping data from all 3 panels as SolCAP REF/ALT:
+```{r}
+chip_recode <- inner_join(def_dutch_alleles, dse) %>% 
+  mutate(across(ends_with("euro"), ~ case_when(!is.na(.x) ~ paste0(str_dup(euro_b_allele, str_count(.x, "B")), str_dup(euro_a_allele, str_count(.x, "A")))))) %>% 
+  mutate(across(ends_with("dutch"), ~ case_when(!is.na(.x) ~ paste0(str_dup(dutch_minor, .x), str_dup(dutch_major, 4-.x))))) %>% 
+  rename(solcap_REF = REF,
+         solcap_ALT = ALT)  
+```
+
+### Add VCF genotypes and reverse complement array-based calls where necessary:
+```{r}
+file <- "wb-split-calls-for-phylo.vcf.gz"
+vcf_header <- system(paste0("zgrep '^#C' ", file), intern = T) %>% 
+  str_remove("^#") %>% 
+  str_split(pattern = "\t") %>% 
+  pluck(1)
+vcf_header
+```
+
+```{r}
+vcf <- read_tsv(file, comment = "#", col_names = c(vcf_header, gff_cols),  na = c(".", "./.", "././.", "./././.", "NA"))
+```
+
+```{r}
+table(vcf$FORMAT)
+```
+
+```{r}
+attributes <- str_split(names(table(vcf$FORMAT)), ":", simplify = F) %>% pluck(1)
+attributes
+```
+
+```{r}
+biallelic_series <- c("0/0/0/0", "0/0/0/1", "0/0/1/1", "0/1/1/1", "1/1/1/1",
+                      "0|0|0|0", "0|0|0|1", "0|0|1|1", "0|1|1|1", "1|1|1|1")
+```
+
+```{r}
+sample_vars <- colnames(vcf)[10:(ncol(vcf)-length(gff_cols))]
+```
+
+```{r}
+vcf2 <- vcf %>% 
+  Reduce(f = sep, x = sample_vars)
+```
+
+```{r}
+vcf3 <- vcf2 %>% 
+  select(CHROM, POS, REF, ALT, all_of(gff_cols), everything(), -contains("KPT")) %>% 
+  filter(USDA_Desiree_GT %in% biallelic_series) 
+```
+
+```{r}
+vcf4 <- vcf3 %>% 
+  filter(CIP_Desiree_GT %in% biallelic_series) %>% 
+  filter(Cornell_Desiree_GT %in% biallelic_series) %>% 
+  filter(CNRS_Desiree_GT %in% biallelic_series) %>% 
+  rename(SNP = gff_attributes) %>% 
+  filter(!duplicated(SNP))
+nrow(vcf4)
+```
+
+```{r}
+full_panel <- inner_join(vcf4, chip_recode)
+```
+
+```{r}
+numeric_genos <- full_panel %>% 
+  mutate(across(matches("_dutch$|_solcap$|_euro$"), ~ case_when(!is.na(.x) & solcap_REF == REF ~ .x,
+                                                                !is.na(.x) & solcap_REF != REF ~ chartr("acgtACGT", "tgcaTGCA", .x)))) %>% 
+  mutate(across(matches("_dutch$|_solcap$|_euro$"), ~ case_when(!is.na(.x) ~ str_count(.x, ALT)))) %>%
+  mutate(across(matches("_GT$"), ~ case_when(!is.na(.x) ~ str_count(.x, "1")))) %>% 
+  select(SNP, ends_with("GT"), ends_with("solcap"), ends_with("euro"), ends_with("dutch")) %>%
+  pivot_longer(-SNP, names_to = "Sample", values_to = "geno") %>%
+  pivot_wider(names_from = SNP, values_from = geno)
+head(numeric_genos)
+```
+
+### Filter by missingness, impute missing genotypes in remaining, make UPGMA and NJ trees:
+```{r}
+missing <- apply(numeric_genos[, 2:ncol(numeric_genos)], 2, function(x) length(which(is.na(x))) / length(x))
+missing_df <- tibble(snp = names(missing),
+                      perc_na = 100 * missing)
+ggplot(missing_df, aes(x = perc_na)) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = 10, color = "red", linetype = "dashed")
+```
+
+```{r}
+# impute
+imputed <- numeric_genos %>% 
+  select(-all_of(names(which(missing_df$perc_na > 10)))) %>% 
+  mutate(across(contains("snp"), function(x) replace_na(x, mean(x, na.rm = T))))
+dim(imputed)
+```
+
+```{r}
+# distance matrix
+d <- imputed %>% 
+  select(-Sample) %>%
+  dist(method = "euclidean", diag = F, upper = F)
+dmtx <- as.matrix(d)
+rownames(dmtx) <- imputed$Sample
+colnames(dmtx) <- imputed$Sample
+```
+
+```{r}
+# trees
+UPGMA_dutch <- upgma(as.dist(dmtx))
+nj_dutch <- NJ(as.dist(dmtx))
+```
+
+```{r}
+# write trees to disk
+write.tree(UPGMA_dutch, file = "potato_upgma_2021_0323.tre")
+write.tree(nj_dutch, file = "potato_nj_2021_0323.tre")
+```
+
+### Evaluate tree goodness of fit:
+```{r}
+x <- as.vector(as.dist(dmtx))
+y <- as.vector(as.dist(cophenetic(nj_dutch)))
+png("potato_nj_goodness_of_fit.png")
+plot(x, y, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="NJ Goodness of Fit", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y~x), col="red")
+dev.off()
+```
+
+```{r}
+cor(x,y)**2
+```
+
+```{r}
+x2 <- as.vector(as.dist(dmtx))
+y2 <- as.vector(as.dist(cophenetic(UPGMA_dutch)))
+png("potato_upgma_goodness_of_fit.png")
+plot(x2, y2, xlab="original pairwise distances", ylab="pairwise distances on the tree", main="UPGMA Goodness of Fit", pch=20, col=transp("black",.1), cex=3)
+abline(lm(y2~x2), col="red")
+dev.off()
+```
+
+```{r}
+cor(x2,y2)**2
+```
+
+### References:
+[1]: https://academic.oup.com/g3journal/article/8/10/3185/6026984?login=true
+[2]: https://www.g3journal.org/content/3/6/1003
+[3]: https://link.springer.com/article/10.1007/s00122-015-2593-y
+[4]: https://europepmc.org/article/pmc/pmc7237394
+[5]: https://www.pnas.org/content/114/46/E9999
